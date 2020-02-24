@@ -64,7 +64,7 @@ concat() {
 			cp $file "$1"
 		else
 			echo "[LOG] copying file $file without headers into $1..."
-			echo "$(tail -n +2 $file)" >> "$1"
+			echo "$(tail -n +2 $file; echo '')" >> "$1"
 		fi
 		((i++))
 	done
@@ -72,6 +72,9 @@ concat() {
 
 checkHeaders
 concat "$2"
+
+echo "[LOG] SUCCESS merging files into $2"
+echo "Total number of lines: $(wc -l $2)"
 
 # clean up temp dir
 rm -rf temp
