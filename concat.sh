@@ -1,82 +1,178 @@
 #!/bin/sh
+set -eo pipefail
 
-if [ $# -lt 2 ]; then
-    echo "[ERROR] enter valid input arguments."
-    echo "[ERROR] ./removeheaders.sh <path_to_zip_file> <name_of_destination_file>"
+#############################################
+# Helper methods that are used in main body #
+#############################################
+
+cleanUpOnExit() {
+  # clean up temp dir
+  rm -rf temp
+}
+
+exitIfDirectory() {
+  if [ -d "$1" ]
+  then
+    log r  "Unable to process $file. It is a directory."
+    log r  "Please put all files to be merged in a single zip or folder."
+    cleanUpOnExit && exit 1
+  fi
+}
+
+checkInput() {
+  read -p 'include first line in merge? y or n: ' include_first_line
+
+  if [[ "$include_first_line" != "y" && "$include_first_line" != "n" ]]; then
+    log r  "invalid option. Please enter y or n."
     exit 1
-fi
-
-echo "[LOG] source zip file: $1"
-echo "[LOG] destination: $2"
-
-echo "[LOG] creating destination file $2..."
-touch "$2"
-
-# unzip folder with all files
-echo "[LOG] unzipping file zip file... $1"
-unzip $1 -d temp
-
-# go into folder
-echo "[LOG] files in zipped folder... (ls temp)"
-ls temp
-
-echo "[LOG] removing __MACOSX from temp folder..."
-rm -rf temp/__MACOSX
+  fi
+}
 
 checkHeaders() {
-	# check if the headers all match
-	echo "[LOG] checking if headers of all files match... (loop through each file & check first line)"
-	i=1;
-	previous_headers=``
-	for file in temp/*
-	do
-		echo "[LOG] file #$i: $file"
-		
+  # check if the headers all match
+  log  "checking if headers of all files match... (checking first lines)"
+  i=1;
+  previous_headers=``
 
-		if [ "$i" -eq 1 ] 
-		then
-		   	previous_headers=`head -n 1 $file`
-		else
-		   	current_headers=`head -n 1 $file`
-		   	if [ "$previous_headers" != "$current_headers" ] 
-		   	then 
-		   		echo "[ERROR] headers in one of the files does not match others"
-				echo "[ERROR] check $file"
-				exit 1				
-			fi
-		   	previous_headers="$current_headers"
-		fi
-		((i++))
-		
-	done
-	echo "[LOG] SUCCESS all headers match!"
+  for file in temp/*; do
+    log  "file #$i: $file"
+
+    exitIfDirectory "$file"
+
+    if [ "$i" -eq 1 ]; then
+        previous_headers=$(head -n 1 "$file")
+    else
+      current_headers=$(head -n 1 "$file")
+      if [ "$previous_headers" != "$current_headers" ]; then
+        log r  "headers in one of the files does not match others"
+        log r  "check $file"
+        cleanUpOnExit && exit 1
+      fi
+      previous_headers="$current_headers"
+    fi
+    ((i++))
+  done
+  log g "SUCCESS all headers match!"
 }
 
 concat() {
-	echo "[LOG] merging files into one..."
+  log  "merging files into one..."
+  local i=1
 
-	i=1;
-	for file in temp/*
-	do
-		if [ "$i" -eq 1 ]
-		then
-			echo "[LOG] copying file $file with headers into $1..."
-			cp $file "$1"
-		else
-			echo "[LOG] copying file $file without headers into $1..."
-			echo "$(tail -n +2 $file; echo '')" >> "$1"
-		fi
-		((i++))
-	done
+  log  "removing output file $1 if already exist..."
+  [ -e file ] && rm "$1"
+
+  if [ "$include_first_line" == "y" ]; then
+    cat temp/* > "$1"
+  else
+    for file in temp/*; do
+      exitIfDirectory "$file"
+
+      if [ "$i" -eq 1 ]; then
+        log  "copying file $file with headers into $1..."
+        cp "$file" "$1"
+      else
+        log  "copying file $file without headers into $1..."
+        (tail -n +2 "$file"; echo '') >> "$1"
+      fi
+      ((i++))
+    done
+  fi
+
 }
 
-checkHeaders
-concat "$2"
+peekIntoFolder() {
+  case "$1" in
+  *.gz | *.tgz | *.zip)
+    log  "unzipping zip file $1 into temp folder... "
+    unzip $1 -d temp
 
-echo "[LOG] SUCCESS merging files into $2"
-echo "Total number of lines: $(wc -l $2)"
+    log  "removing auto-generated __MACOSX as a result of unzipping folder..."
+    rm -rf temp/__MACOSX
+        ;;
+  *.csv | *.txt)
+    log r  "input is a file. Please put file in folder..."
+    exit 1
+    ;;
+  *)
+    log  "saving files in $1 in temp folder..."
+    cp -r $1 temp
+    ;;
+  esac
+}
 
-# clean up temp dir
-rm -rf temp
+convertWindowsToUnix(){
+  log  "converting file to unix..."
+  cp "$1" "temp.csv" && rm "$1"
+  tr -d '\15\32' < temp.csv  > "$1"
+  rm temp.csv
+}
 
-exit 1
+log() {
+  local code="\033["
+  local flag=""
+  case "$1" in
+    red    |  r) color="${code}1;31m"; flag="[ERROR] ";;
+    green  |  g) color="${code}1;32m"; flag="[SUCCESS] ";;
+    *) local text="[LOG] $1"
+  esac
+  [ -z "$text" ] && local text="$color$flag$2${code}0m"
+  printf "$text\n"
+}
+
+###################################
+# Main body of script starts here #
+###################################
+
+main() {
+
+  if [ $# -lt 2 ]; then
+    log r  "enter valid input arguments."
+    log r  "./concat.sh <path_to_zip_file> <name_of_destination_file>"
+    exit 1
+  fi
+
+  checkInput "$1" "$2"
+
+  log  "source zip file: $1"
+  log  "destination: $2"
+
+  log  "creating destination file $2..."
+  touch "$2"
+
+  log  "peeking into folder..."
+  peekIntoFolder "$1"
+
+  # go into folder
+  log  "files in folder..."
+  ls temp
+
+  if [ "$include_first_line" == "n" ]; then
+    checkHeaders
+  fi
+
+  concat "$2"
+  convertWindowsToUnix "$2"
+
+  log g  "Successfully merged files into $2" && echo ""
+
+  echo   "---------------- SUMMARY -----------------"
+  echo  "New file saved to: $2"
+  echo  "Total Number of files in folder: $(ls temp | wc -l)"
+  echo  "Total number of lines from all files: \n $(find ./temp/* -name '*' -print0 | xargs -0 wc -l)"
+  echo  "Number of lines in new file: $(wc -l "$2")"
+  echo  "Hint: number of lines should match before and after."
+  echo  ""
+  echo   "----------------- DATA --------------------"
+  echo  "$(head -n2 "$2")" && echo  "" && echo  "skipping to two last lines..." && echo  "" && tail -n2 "$2"
+  echo   "-------------------------------------------"
+
+  cleanUpOnExit && exit 1
+}
+
+# if bash is runnable as a library & calling main
+[[ "$0" == "$BASH_SOURCE" ]] && main "$@"
+
+#################
+# End of script #
+#################
