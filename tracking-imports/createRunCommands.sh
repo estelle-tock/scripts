@@ -1,42 +1,6 @@
 # bin/bash
 set -eo pipefail
 
-reportSummary() {
-  echo  ""
-  echo  "------------ COMMAND FILE ----------------"
-  echo  ""
-  echo  "Command file saved to: $command_file"
-  echo  ""
-  echo  "---------- BUSINESS DETAILS --------------"
-  echo  ""
-  echo  "Business Name: $business_name"
-  echo  "(Final) Demo ID: $demo_id"
-  echo  "Production ID: $prod_id"
-  echo  "Reminder Texts ON: $reminder_texts_bool"
-  echo  "Welcome Texts ON: $welcome_texts_bool"
-  echo  "Export Configurations: $export_configs_bool"
-  if [[ "$export_configs_bool" == "y" ]]; then
-      echo  "Export Configurations FROM ($export_business_env): $export_business_id"
-      echo  "Import Configurations TO ($import_business_env): $import_business_id"
-      echo  "Import Configurations TO ($import2_business_env): $import2_business_id"
-  fi
-  echo  ""
-  echo   "------------ DATA DETAILS ----------------"
-  echo  ""
-  echo  "Booking System: $booking_system"
-  echo  "Ticket Type: $ticket_type"
-  echo  "Config Type: $config_type"
-  echo  "Reservation Date Format: $reso_date_format"
-  echo  "Reservation Time Format: $reso_time_format"
-  echo  "Waitlist Date Format: $waitlist_date_format"
-  echo  "Waitlist Time Format: $waitlist_time_format"
-  echo  "Reservation File Name: $business_resos"
-  echo  "Guest File Name: $business_guests"
-  echo  "Waitlist File Name: $business_waitlist"
-  echo  ""
-  echo   "-------------------------------------------"
-}
-
 inputs() {
   read -p 'Name of command file (date_env_business.sh): ' command_file
   read -p 'Business Name? ' business_name
