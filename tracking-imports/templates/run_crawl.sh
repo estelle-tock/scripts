@@ -17,48 +17,18 @@
 # Booking System - <??booking_system??>
 # Ticket Type - <??ticket_type??>
 # Config Type - <??config_type??>
+# Reservation file name - <??business_resos??> 
+# Guest file name - <??business_guests??>
+# Waitlist file name - <??business_waitlist??>
 # Reso Date Format - <??reso_date_format??>
 # Reso Time Format - <??reso_time_format??>
 # Waitlist Date Format - <??waitlist_date_format??>
 # Waitlist Time Format - <??waitlist_time_format??>
-# Reservation file name - <??business_resos??> 
-# Guest file name - <??business_guests??>
-# Waitlist file name - <??business_waitlist??>
 # Export Business ID - <??export_business_id??>
 # Import Business ID - <??import_business_id??>
 # Import Business ID - <??import_2_business_id??>
 #
 # --------------------------------------------------------
-
-
-# ------------------------------------------------
-# -                 FINAL DEMO                   -
-# ------------------------------------------------
-./concat.sh ~/<??business_resos??>.zip ~/<??business_resos??>.csv
-
-# Check headers & adjust appropriately to Import Job Formatter on Mac Numbers
-
-# Run Locally (RESOS & GUESTS)
-@local.env.flags
-com.tocktix.cron.dataimport.ImportJob
---businessId=1
---guest_csv=/Users/estelle/<??business_guests??>.csv
---reso_csv=/Users/estelle/<??business_resos??>.csv
---config_json="{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, ticketTypeName: '<??ticket_type??>'}"
-
-# Run Locally (WAITLISTS)
-@local.env.flags
-com.tocktix.cron.dataimport.ImportJob
---businessId=1
---guest_csv=/Users/estelle/<??business_waitlist??>.csv
---reso_csv=/Users/estelle/empty.txt
---config_json= "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??> ,resoTimeFormat:<??waitlist_time_format??>,fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], ticketTypeName: '<??ticket_type??>'}"
-
-scp -i ~/.ssh/google_compute_engine ~/<??business_guests??>.csv estelle@crawl-server:~/ && 
-scp -i ~/.ssh/google_compute_engine ~/<??business_resos??>.csv estelle@crawl-server:~/ &&
-scp -i ~/.ssh/google_compute_engine ~/<??business_waitlist??>.csv estelle@crawl-server:~/
-
-ssh -i ~/.ssh/google_compute_engine crawl-server
 
 sudo su robinanil
 

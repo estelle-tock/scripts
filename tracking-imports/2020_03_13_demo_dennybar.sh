@@ -1,0 +1,93 @@
+# ------------------- INSTRUCTIONS ------------------------
+#
+# (Cmd + Shift + F) -> <??____??> -> actual value
+# or run ./createRunCommands.sh to auto-fill
+#
+# ----------------- BUSINESS DETAILS ----------------------
+#
+# Business Name - Denny Bar
+# Demo ID - 3191
+# Prod ID - 
+# Reminder Texts - true
+# Welcome Texts - false
+# Export Configurations - y 
+#
+# ------------------- DATA DETAILS -----------------------
+#
+# Booking System - RESY
+# Ticket Type - 
+# Config Type - flex
+# Reso Date Format - YYYY_M_D_DASH
+# Reso Time Format - HH_MM_SS
+# Waitlist Date Format - YYYY_M_D_DASH
+# Waitlist Time Format - HH_MM_SS
+# Reservation file name - dennybar_resos 
+# Guest file name - dennybar_guests
+# Waitlist file name - dennybar_waitlist
+# Export Business ID - 10689
+# Import Business ID - 3191
+# Import Business ID - <??import_2_business_id??>
+#
+# --------------------------------------------------------
+
+
+# ------------------------------------------------
+# -                 FINAL DEMO                   -
+# ------------------------------------------------
+./concat.sh ~/dennybar_resos.zip ~/dennybar_resos.csv
+
+# Check headers & adjust appropriately to Import Job Formatter on Mac Numbers
+
+# Run Locally (RESOS & GUESTS)
+@local.env.flags
+com.tocktix.cron.dataimport.ImportJob
+--businessId=1
+--guest_csv=/Users/estelle/dennybar_guests.csv
+--reso_csv=/Users/estelle/dennybar_resos.csv
+--config_json="{formatVersion:RESY,separator:',', resoDateFormat:YYYY_M_D_DASH,resoTimeFormat:HH_MM_SS, quoteDetectionEnabled: false, smsReminderEnabled: true}"
+
+# Run Locally (WAITLISTS)
+@local.env.flags
+com.tocktix.cron.dataimport.ImportJob
+--businessId=1
+--guest_csv=/Users/estelle/dennybar_waitlist.csv
+--reso_csv=/Users/estelle/empty.txt
+--config_json= "{formatVersion:WAITLIST,separator:',',guestDateFormat:YYYY_M_D_DASH ,resoTimeFormat:HH_MM_SS,fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}]}"
+
+scp -i ~/.ssh/google_compute_engine ~/dennybar_guests.csv estelle@crawl-server:~/ && 
+scp -i ~/.ssh/google_compute_engine ~/dennybar_resos.csv estelle@crawl-server:~/ &&
+scp -i ~/.ssh/google_compute_engine ~/dennybar_waitlist.csv estelle@crawl-server:~/
+
+ssh -i ~/.ssh/google_compute_engine crawl-server
+
+sudo su robinanil
+
+cp dennybar_resos.csv ~ && cp dennybar_guests.csv ~ && cp dennybar_waitlist.csv ~
+
+cd ~/importer/server
+
+# [Optional] Jenkins Cron for export/import configs
+# https://cron.tocktix.com/job/Export%20configurations/build?delay=0sec
+
+# export configs from demo to final demo
+./export_configuration.sh prod 10689 10689.prod.proto
+./import_configuration.sh demo 3191 10689.prod.proto
+
+# DEMO (RESOS & GUESTS)
+./run_importer.sh -e demo -b 3191 -g ../../dennybar_guests.csv -r ../../dennybar_resos.csv -c "{formatVersion:RESY,separator:',', resoDateFormat:YYYY_M_D_DASH,resoTimeFormat:HH_MM_SS, quoteDetectionEnabled: false, smsReminderEnabled: true}"
+
+# DEMO (WAITLIST)
+./run_importer.sh -e demo -b  -g ../../dennybar_waitlist.csv -r ../../empty.txt -c "{formatVersion:WAITLIST,separator:',',guestDateFormat:YYYY_M_D_DASH, resoTimeFormat:HH_MM_SS, fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}]}"
+
+# ------------------------------------------------
+# -                 END OF IMPORT                -
+# ------------------------------------------------
+
+
+# -------------- UPDATE SALESFORCE ---------------
+# Comment with commands and steps used for import
+# Update with time completed on Account Page > Details > Import for Eng
+# ------------------------------------------------
+
+# Total manual eyeball-ing checks that should be automated: 47
+# Total manual commands run: 18
