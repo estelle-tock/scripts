@@ -1,18 +1,6 @@
 # bin/bash
 set -eo pipefail
 
-log() {
-  local code="\033["
-  local flag=""
-  case "$1" in
-    red    |  r) color="${code}1;31m"; flag="[ERROR] ";;
-    green  |  g) color="${code}1;32m"; flag="[SUCCESS] ";;
-    *) local text="[LOG] $1"
-  esac
-  [ -z "$text" ] && local text="$color$flag$2${code}0m"
-  printf "$text\n"
-}
-
 reportSummary() {
   echo  ""
   echo  "------------ COMMAND FILE ----------------"
