@@ -44,7 +44,7 @@ com.tocktix.cron.dataimport.ImportJob
 --businessId=1
 --guest_csv=/Users/estelle/<??business_guests??>.csv
 --reso_csv=/Users/estelle/<??business_resos??>.csv
---config_json="{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, '<??ticket_type??>'}"
+--config_json="{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, <??ticket_type??>}"
 
 # Run Locally (WAITLISTS)
 @local.env.flags
@@ -52,7 +52,7 @@ com.tocktix.cron.dataimport.ImportJob
 --businessId=1
 --guest_csv=/Users/estelle/<??business_waitlist??>.csv
 --reso_csv=/Users/estelle/empty.txt
---config_json= "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??> ,resoTimeFormat:<??waitlist_time_format??>,fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], '<??ticket_type??>'}"
+--config_json= "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??> ,resoTimeFormat:<??waitlist_time_format??>,fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], <??ticket_type??>}"
 
 scp -i ~/.ssh/google_compute_engine ~/<??business_guests??>.csv estelle@crawl-server:~/ && 
 scp -i ~/.ssh/google_compute_engine ~/<??business_resos??>.csv estelle@crawl-server:~/ &&
@@ -76,10 +76,10 @@ cd ~/importer/server
 # check dashboard-demo.exploretock.com for tables at ID <??import_business_id??>
 
 # FINAL DEMO (RESOS & GUESTS)
-./run_importer.sh -e demo -b <??demo_id??> -g ../../<??business_guests??>.csv -r ../../<??business_resos??>.csv -c "{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, '<??ticket_type??>'}"
+./run_importer.sh -e demo -b <??demo_id??> -g ../../<??business_guests??>.csv -r ../../<??business_resos??>.csv -c "{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, <??ticket_type??>}"
 
 # FINAL DEMO (WAITLIST)
-./run_importer.sh -e demo -b <??demo_id??> -g ../../<??business_waitlist??>.csv -r ../../empty.txt -c "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??>, resoTimeFormat:<??waitlist_time_format??>, fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], '<??ticket_type??>'}"
+./run_importer.sh -e demo -b <??demo_id??> -g ../../<??business_waitlist??>.csv -r ../../empty.txt -c "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??>, resoTimeFormat:<??waitlist_time_format??>, fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], <??ticket_type??>}"
 
 # ------------------------------------------------
 # -                 PRODUCTION                   -
@@ -96,10 +96,10 @@ cd ~/importer/server
 #  [ ] If LARGE file, use nohup to run in background & DO NOT RE-RUN
 
 # PRODUCTION (RESOS & GUESTS)
-./run_importer.sh -e prod -b <??prod_id??> -g ../../<??business_guests??>.csv -r ../../<??business_resos??>.csv -c "{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, '<??ticket_type??>'}" -t <??welcome_texts_bool??>
+./run_importer.sh -e prod -b <??prod_id??> -g ../../<??business_guests??>.csv -r ../../<??business_resos??>.csv -c "{formatVersion:<??booking_system??>,separator:',', resoDateFormat:<??reso_date_format??>,resoTimeFormat:<??reso_time_format??>, quoteDetectionEnabled: false, smsReminderEnabled: <??reminder_texts_bool??>, <??ticket_type??>}" -t <??welcome_texts_bool??>
 
 # PRODUCTION (WAITLIST)
-./run_importer.sh -e prod -b <??prod_id??> -g ../../<??business_waitlist??>.csv -r ../../empty.txt -c "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??>, resoTimeFormat:<??waitlist_time_format??>, fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], '<??ticket_type??>'}"
+./run_importer.sh -e prod -b <??prod_id??> -g ../../<??business_waitlist??>.csv -r ../../empty.txt -c "{formatVersion:WAITLIST,separator:',',guestDateFormat:<??waitlist_date_format??>, resoTimeFormat:<??waitlist_time_format??>, fieldNameMap:[{fieldName: 'firstName', columnName: 'first_name'}, {fieldName: 'lastName', columnName: 'last_name'},{fieldName: 'phone', columnName: 'mobile_number'}, {fieldName: 'email', columnName: 'em_address'}, {fieldName: 'createdAt', columnName: 'date_created'}, {fieldName: 'desiredDate', columnName: 'date_booked'}, {fieldName: 'desiredSize', columnName: 'num seats'}, {fieldName: 'note', columnName: 'preferred start'}], <??ticket_type??>}"
 
 
 # ------------------------------------------------

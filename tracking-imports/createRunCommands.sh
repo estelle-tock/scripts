@@ -62,7 +62,6 @@ createFile() {
 
 main() {
   inputs
-  reportSummary
 
   cp "templates/date_env_businessName.sh" "$command_file"
   createFile "$command_file"

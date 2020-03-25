@@ -1,0 +1,27 @@
+{
+  "id": "238e3FLK29a3",
+  "business_id": "", 
+  "reservation_count": "", 
+  "guest_count": "", 
+  "walk_in_count": "", 
+  "cancellation_count": "", 
+  "line_count": "", 
+  "fist_reservation_details": {
+    "date": 28392842,
+    "name": "Amy Smith",
+    "party_size": 2,
+    "email": "amy@gmail.com",
+    "phone": "8475551234",
+    "visit_tag": "Anniversary Visit Note: would like champagne upon arrival"
+  },
+  "last_reservation_details": {
+    "date": 28392842,
+    "name": "Amy Smith",
+    "party_size": 2,
+    "email": "amy@gmail.com",
+    "phone": "8475551234",
+    "visit_tag": "Anniversary Visit Note: would like champagne upon arrival"
+  },
+  "columns_imported": ["Visit Date", "Visit Time,", "Created Date"],
+  "columns_not_imported": ["Created Lead Time", "Last Updated", "Seated Time"],
+}
