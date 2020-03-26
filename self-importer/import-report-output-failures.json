@@ -1,0 +1,13 @@
+{
+  "business_name": "Sushi Dokku",
+  "business_id": 10164,
+  "system": "Open Table Guest Center",
+  "given_columns": ["Visit Time", "Guest Name", "Size", "Source", "Created Date", "Created Time", "Status"],
+  "missing_required_columns": ["Visit Date"],
+  "expected_required_columns": ["Visit Date", "Visit Time", "Guest Name", "Size", "Source", "Created Time", "Status", "Table", "Phone Number", "Email", "Server", "Visit Notes"],
+  "failure_message": "You are missing required columns",
+  // "failure_message": "File format does not match any supported system",
+  // "failure_message": "We currently don't support the date/time format. Please reformat your file to use a supported format in the appropriate column.",
+  // "failure_message": "The file has inconsistent date/time formats.",
+  // "failure_message": "The file cannot be parsed. Please check formatting of the file. If you are still having issues, please reach out to Tock Engineering Team.",
+}
