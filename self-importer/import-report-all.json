@@ -2,21 +2,46 @@
   "environment": "demo",
   "businessId": "1",
   "bookingSystem": "OPENTABLE_GUESTCENTER",
-  "guests": [
-    {
-      "name": "Billy Joe",
-      "email": "billy@gmail.com",
-      "phone": "8472128492",
-      "guestTags": ["Friendly", "Friend of Chef"],
-      "reservationCount": 42,
-    },{
-      "name": "Jane Smith",
-      "email": "jane@gmail.com",
-      "phone": "8472128292",
-      "guestTags": ["Loud", "Friend of Chef"],
-      "reservationCount": 90,
-    }
-  ],
+  "guests" : {
+    "included": [
+      {
+        "name": "Billy Joe",
+        "email": "billy@gmail.com",
+        "phone": "8472128492",
+        "guestTags": ["Friendly", "Friend of Chef"],
+        "guestNotes": ["children ran around the restaurant"],
+        "reservationCount": 42,
+        "source": "RESERVATION"
+      },{
+        "name": "Jane Smith",
+        "email": "jane@gmail.com",
+        "phone": "8472128292",
+        "guestTags": ["Loud", "Friend of Chef"],
+        "guestNotes": ["wonderful tippers, even wrote a sweet note"],
+        "reservationCount": 90,
+        "source": "GUEST"
+      },{
+        "name": "John Doe",
+        "email": "john@gmail.com",
+        "phone": "8472132292",
+        "guestTags": ["Nice", "Friend of Chef"],
+        "reservationCount": 90,
+        "source": "WAITLIST"
+      }
+    ],
+    "not_included" : [
+      {
+       "name": "",
+        "email": "billy@gmail.com",
+        "phone": "8472128492",
+        "guestTags": ["Friendly", "Friend of Chef"],
+        "guestNotes": ["children ran around the restaurant"],
+        "reservationCount": 42,
+        "source": "RESERVATION",
+        "reason": "merged"
+      }
+    ],
+  },
   "reservations": [
     {
       "date": "2020/05/05 7:00 PM",
@@ -28,6 +53,15 @@
       "isCancellation": true,
       "isWalkIn": false,
       "isNoGuest": false,
+    },
+  ],
+    "waitlist": [
+    {
+      "date": "2020/05/05 7:00 PM",
+      "name": "Billy Joe",
+      "email": "billy@gmail.com",
+      "phone": "8472128492",
+      "partySize": 2,
     },
   ],
   "tags": [
