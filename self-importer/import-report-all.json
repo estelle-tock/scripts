@@ -2,6 +2,67 @@
   "environment": "demo",
   "businessId": "1",
   "bookingSystem": "OPENTABLE_GUESTCENTER",
+  "createdAt": "2020/05/05 7:30 PM",
+  "vip" : {
+    "vipGuests": [
+      {
+        "name": "Barbra Johnson",
+        "email": "barb@gmail.com",
+        "phone": "8472128492",
+        "guestTags": ["Friendly", "Friend of Chef"],
+        "guestNotes": ["children ran around the restaurant"],
+        "reservationCount": 1232,
+      },
+    ],
+    "vipTagsDefault" : [
+      {
+        "name": "PPX",
+        "guests": [{
+          "name": "Taylor Lee",
+          "email": "taylor@gmail.com",
+          "phone": "8472128492",
+          "guestTags": ["PPX"],
+          "guestNotes": ["frequently orders red wine"],
+          "reservationCount": 1232,
+        }],
+        "reservations" : [{
+          "date": "2020/05/05 7:00 PM",
+          "name": "Billy Joe",
+          "email": "billy@gmail.com",
+          "phone": "8472128492",
+          "visitTags": ["PPX", ],
+          "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
+          "isCancellation": true,
+          "isWalkIn": false,
+          "isNoGuest": false,
+        }]
+      }
+    ],
+    "vipTagsFromCustomer" : [
+      {
+        "name": "Favorite",
+        "guests": [{
+          "name": "Taylor Lee",
+          "email": "taylor@gmail.com",
+          "phone": "8472128492",
+          "guestTags": ["Favorite", "PPX"],
+          "guestNotes": ["frequently orders red wine"],
+          "reservationCount": 1232,
+        }],
+        "reservations" : [{
+          "date": "2020/05/05 7:00 PM",
+          "name": "Billy Joe",
+          "email": "billy@gmail.com",
+          "phone": "8472128492",
+          "visitTags": ["Favorite", "PPX"],
+          "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
+          "isCancellation": true,
+          "isWalkIn": false,
+          "isNoGuest": false,
+        }]
+      }
+    ]
+  },
   "guests" : {
     "included": [
       {
