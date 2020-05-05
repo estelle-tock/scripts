@@ -107,10 +107,15 @@ cd ~/importer/server
 # ------------------------------------------------
 
 
+
+
 # -------------- UPDATE SALESFORCE ---------------
 # Comment with commands and steps used for import
+# Update Status
+# Update with number of lines in each file
+# Update with number of records imported for resos (Reports > Item Sales > 2000-01-01 to today)
+# Update with number of records imported for guests (Guests tab)
+# Update with number of records imported for waitlist (Operations > Waitlist)
+# Pick out some guests and make sure they're in dashboard
 # Update with time completed on Account Page > Details > Import for Eng
 # ------------------------------------------------
-
-# Total manual eyeball-ing checks that should be automated: 47
-# Total manual commands run: 18

@@ -14,56 +14,12 @@
         "reservationCount": 1232,
       },
     ],
-    "vipTagsDefault" : [
-      {
-        "name": "PPX",
-        "guests": [{
-          "name": "Taylor Lee",
-          "email": "taylor@gmail.com",
-          "phone": "8472128492",
-          "guestTags": ["PPX"],
-          "guestNotes": ["frequently orders red wine"],
-          "reservationCount": 1232,
-        }],
-        "reservations" : [{
-          "date": "2020/05/05 7:00 PM",
-          "name": "Billy Joe",
-          "email": "billy@gmail.com",
-          "phone": "8472128492",
-          "visitTags": ["PPX", ],
-          "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
-          "isCancellation": true,
-          "isWalkIn": false,
-          "isNoGuest": false,
-        }]
-      }
-    ],
-    "vipTagsFromCustomer" : [
-      {
-        "name": "Favorite",
-        "guests": [{
-          "name": "Taylor Lee",
-          "email": "taylor@gmail.com",
-          "phone": "8472128492",
-          "guestTags": ["Favorite", "PPX"],
-          "guestNotes": ["frequently orders red wine"],
-          "reservationCount": 1232,
-        }],
-        "reservations" : [{
-          "date": "2020/05/05 7:00 PM",
-          "name": "Billy Joe",
-          "email": "billy@gmail.com",
-          "phone": "8472128492",
-          "visitTags": ["Favorite", "PPX"],
-          "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
-          "isCancellation": true,
-          "isWalkIn": false,
-          "isNoGuest": false,
-        }]
-      }
-    ]
   },
   "guests" : {
+    "guestsIncludedCount": 3,
+    "guestsFromReservationFile": 1,
+    "guestsFromGuestFile": 1,
+    "guestsFromWaitlistFile": 0,
     "included": [
       {
         "name": "Billy Joe",
@@ -92,7 +48,7 @@
     ],
     "not_included" : [
       {
-       "name": "",
+        "name": "",
         "email": "billy@gmail.com",
         "phone": "8472128492",
         "guestTags": ["Friendly", "Friend of Chef"],
@@ -102,21 +58,58 @@
         "reason": "merged"
       }
     ],
+    "concierges" : [
+      {
+        "name": "Billy Bob",
+        "email": "",
+        "phone": "8472128492",
+        "guestTags": ["Friendly", "Friend of Chef"],
+        "guestNotes": ["children ran around the restaurant", "billy@gmail.com"],
+        "reservationCount": 42,
+        "source": "RESERVATION",
+        "reason": "merged"
+      }
+    ],
   },
-  "reservations": [
-    {
-      "date": "2020/05/05 7:00 PM",
-      "name": "Billy Joe",
-      "email": "billy@gmail.com",
-      "phone": "8472128492",
-      "visitTags": ["Friendly", "Friend of Chef"],
-      "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
-      "isCancellation": true,
-      "isWalkIn": false,
-      "isNoGuest": false,
-    },
-  ],
-    "waitlist": [
+  "reservations": {
+    "included": [
+      {
+        "date": "2020/05/05 7:00 PM",
+        "name": "Sally Mae",
+        "email": "sally@gmail.com",
+        "phone": "8434128492",
+        "visitTags": ["Friendly", "Friend of Chef"],
+        "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
+        "isCancellation": true,
+        "isWalkIn": false,
+        "isNoGuest": false,
+      },
+    ],
+    "duplicates": [
+      {
+        "date": "2020/05/05 7:00 PM",
+        "name": "Billy Joe",
+        "email": "billy@gmail.com",
+        "phone": "8472128492",
+        "visitTags": ["Friendly", "Friend of Chef"],
+        "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
+        "isCancellation": true,
+        "isWalkIn": false,
+        "isNoGuest": false,
+      },{
+        "date": "2020/05/05 7:00 PM",
+        "name": "Billy Joe",
+        "email": "billy@gmail.com",
+        "phone": "8472128492",
+        "visitTags": ["Friendly", "Friend of Chef"],
+        "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
+        "isCancellation": true,
+        "isWalkIn": false,
+        "isNoGuest": false,
+      },
+    ],
+  },
+  "waitlist": [
     {
       "date": "2020/05/05 7:00 PM",
       "name": "Billy Joe",

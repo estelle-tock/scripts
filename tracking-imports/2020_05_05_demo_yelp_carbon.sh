@@ -6,7 +6,7 @@
 # ----------------- BUSINESS DETAILS ----------------------
 #
 # Business Name - Carbon County
-# Demo ID - 3347
+# Demo ID - 3471
 # Prod ID - 
 # Reminder Texts - false
 # Welcome Texts - false
@@ -30,7 +30,7 @@
 #
 # --------------------------------------------------------
 
-./concat.sh ~/carbon_resos.zip ~/carbon_resos.csv
+./concat.sh ~/carbon_resos_05_05.zip ~/carbon_resos_05_05.csv
 
 # Check headers & adjust appropriately to Import Job Formatter on Mac Numbers
 
@@ -42,14 +42,14 @@ com.tocktix.cron.dataimport.ImportJob
 --reso_csv=/Users/estelle/carbon_resos_05_05.csv
 --config_json="{formatVersion:YELP,separator:',', resoDateFormat:M_D_YY,resoTimeFormat:H_M_A, quoteDetectionEnabled: false, smsReminderEnabled: false}"
 
-scp -i ~/.ssh/google_compute_engine ~/carbon_guests.csv estelle@crawl-server:~/ && 
-scp -i ~/.ssh/google_compute_engine ~/carbon_resos.csv estelle@crawl-server:~/
+scp -i ~/.ssh/google_compute_engine ~/carbon_guests_05_05.csv estelle@crawl-server:~/ && 
+scp -i ~/.ssh/google_compute_engine ~/carbon_resos_05_05.csv estelle@crawl-server:~/
 
 ssh -i ~/.ssh/google_compute_engine crawl-server
 
 sudo su robinanil
 
-cp carbon_resos.csv ~ && cp carbon_guests.csv ~
+cp carbon_guests_05_05.csv ~ && cp carbon_resos_05_05.csv ~
 
 cd ~/importer/server
 
@@ -58,11 +58,21 @@ cd ~/importer/server
 
 # export configs from prod to demo
 ./export_configuration.sh prod 10667 10667.prod.proto
-./import_configuration.sh demo 3347 10667.prod.proto
-./import_configuration.sh demo 3348 10667.prod.proto
+./import_configuration.sh demo 3471 10667.prod.proto
 
-# check dashboard-demo.exploretock.com for tables at ID 3347
+# check dashboard-demo.exploretock.com for tables at ID 3471
 
-# FINAL DEMO (RESOS & GUESTS)
-./run_importer.sh -e demo -b 3347 -g ../../carbon_guests.csv -r ../../carbon_resos.csv -c "{formatVersion:YELP,separator:',', resoDateFormat:M_D_YY,resoTimeFormat:H_M_A, quoteDetectionEnabled: false, smsReminderEnabled: false }"
+# DEMO (RESOS & GUESTS)
+./run_importer.sh -e demo -b 3471 -g ../../carbon_guests_05_05.csv -r ../../carbon_resos_05_05.csv -c "{formatVersion:YELP,separator:',', resoDateFormat:M_D_YY,resoTimeFormat:H_M_A, quoteDetectionEnabled: false, smsReminderEnabled: false }"
 
+
+# -------------- UPDATE SALESFORCE ---------------
+# Comment with commands and steps used for import
+# Update Status
+# Update with number of lines in each file
+# Update with number of records imported for resos (Reports > Item Sales > 2000-01-01 to today)
+# Update with number of records imported for guests (Guests tab)
+# Update with number of records imported for waitlist (Operations > Waitlist)
+# Pick out some guests and make sure they're in dashboard
+# Update with time completed on Account Page > Details > Import for Eng
+# ------------------------------------------------
