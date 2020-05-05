@@ -1,9 +1,49 @@
 {
-  "environment": "demo",
-  "businessId": "1",
-  "bookingSystem": "OPENTABLE_GUESTCENTER",
-  "createdAt": "2020/05/05 7:30 PM",
-  "vip" : {
+  "importInformation": {
+    "business_id": 10164,
+    "createdAt": "2020-05-05 7:30 PM",
+    "environment": "DEMO",
+    "businessInformation":[
+      {
+        "businessName": "Sushi Dokku",
+        "bookingSystem": "RESY",
+        "fileInformation": [
+          {
+            "fileNames": ["sushidokku01_resos.csv", "sushidokku02_resos.csv"],
+            "fileLinesTotal": 289328,
+            "fileType": "RESERVATION",
+          },{
+            "fileNames": ["sushidokku01_guest.csv", "sushidokku02_guest.csv"],
+            "fileLinesTotal": 3459,
+            "fileType": "GUEST",
+          },{
+            "fileNames": ["sushidokku01_waitlist.csv"],
+            "fileLinesTotal": 635,
+            "fileType": "WAITLIST",
+          }
+        ]
+      },{
+        "businessName": "Booze Box",
+        "bookingSystem": "RESY",
+        "fileInformation": [
+          {
+            "fileNames": ["booze01_resos.csv", "booze02_resos.csv"],
+            "fileLinesTotal": 289328,
+            "fileType": "RESERVATION",
+          },{
+            "fileNames": ["booze01_guest.csv", "booze02_guest.csv"],
+            "fileLinesTotal": 3459,
+            "fileType": "GUEST",
+          },{
+            "fileNames": ["sushidokku01_waitlist.csv"],
+            "fileLinesTotal": 635,
+            "fileType": "WAITLIST",
+          }
+        ]
+      },
+    ]
+  },
+  "vipInformation" : {
     "vipGuests": [
       {
         "name": "Barbra Johnson",
@@ -15,7 +55,7 @@
       },
     ],
   },
-  "guests" : {
+  "guestInformation" : {
     "guestsIncludedCount": 3,
     "guestsFromReservationFile": 1,
     "guestsFromGuestFile": 1,
@@ -71,7 +111,7 @@
       }
     ],
   },
-  "reservations": {
+  "reservationInformation": {
     "included": [
       {
         "date": "2020/05/05 7:00 PM",
@@ -109,7 +149,7 @@
       },
     ],
   },
-  "waitlist": [
+  "waitlistInformation": [
     {
       "date": "2020/05/05 7:00 PM",
       "name": "Billy Joe",
@@ -118,7 +158,7 @@
       "partySize": 2,
     },
   ],
-  "tags": [
+  "tagInformation": [
     {
       "name": "PPX",
       "guestsCount": 832,

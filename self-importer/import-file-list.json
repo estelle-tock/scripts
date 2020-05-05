@@ -1,40 +1,44 @@
 {
-  "data":[
+  "business_id": 10164,
+  "createdAt": "2020-05-05 7:30 PM",
+  "environment": "DEMO",
+  "businessInformation":[
     {
-      "file_names": ["Restaurant - Demo Resos - 2020/03/24.csv", "Restaurant - Demo Guests - 2020/03/24.csv"],
-      "business_name": "Sushi Dokku",
-      "business_id": 10164,
-      "environment": "demo",
-      "date_uploaded": "03/25/2020",
-      "author": "Wade Mckinney",
-      "status": "VALID_AND_READY_FOR_IMPORT"
+      "businessName": "Sushi Dokku",
+      "bookingSystem": "RESY",
+      "fileInformation": [
+        {
+          "fileNames": ["sushidokku01_resos.csv", "sushidokku02_resos.csv"],
+          "fileLinesTotal": 289328,
+          "fileType": "RESERVATION",
+        },{
+          "fileNames": ["sushidokku01_guest.csv", "sushidokku02_guest.csv"],
+          "fileLinesTotal": 3459,
+          "fileType": "GUEST",
+        },{
+          "fileNames": ["sushidokku01_waitlist.csv"],
+          "fileLinesTotal": 635,
+          "fileType": "WAITLIST",
+        }
+      ]
+    },{
+      "businessName": "Booze Box",
+      "bookingSystem": "RESY",
+      "fileInformation": [
+        {
+          "fileNames": ["booze01_resos.csv", "booze02_resos.csv"],
+          "fileLinesTotal": 289328,
+          "fileType": "RESERVATION",
+        },{
+          "fileNames": ["booze01_guest.csv", "booze02_guest.csv"],
+          "fileLinesTotal": 3459,
+          "fileType": "GUEST",
+        },{
+          "fileNames": ["sushidokku01_waitlist.csv"],
+          "fileLinesTotal": 635,
+          "fileType": "WAITLIST",
+        }
+      ]
     },
-    {
-      "file_names": ["Restaurant - Demo Resos - 2020/03/24.csv", "Restaurant - Demo Guests - 2020/03/24.csv"],
-      "business_name": "Booze Box",
-      "business_id": 10164,
-      "environment": "demo",
-      "date_uploaded": "03/25/2020",
-      "author": "Beth Robertson",
-      "status": "IMPORT_COMPLETED"
-    },
-    {
-      "file_names": ["business_resos.csv"],
-      "business_name": "Business Name",
-      "business_id": 32984,
-      "environment": "demo",
-      "date_uploaded": "03/27/2020",
-      "author": "Shane Watson",
-      "status": "FILE_REJECTED"
-    },
-    {
-      "file_names": ["business_guests.csv"],
-      "business_name": "Business Name",
-      "business_id": 12989,
-      "environment": "demo",
-      "date_uploaded": "03/27/2020",
-      "author": "Shane Watson",
-      "status": "FILE_READY_FOR_APPROVAL"
-    }
   ]
 }
