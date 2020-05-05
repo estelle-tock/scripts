@@ -20,7 +20,7 @@ inputs() {
       read -p 'Second Import Configurations TO : ' import2_business_id
     fi
   fi
-  read -p 'Booking System (OPENTABLE_GUEST_CENTER, YELP, RESY, etc.): ' booking_system
+  read -p 'Booking System (OPENTABLE_GUESTCENTER, YELP, RESY, etc.): ' booking_system
   read -p 'Ticket Type (press enter if none): ' ticket_type
   ticket_type="ticketTypeName: $ticket_type"
   read -p 'Config Type (ex. flex/slot): ' config_type
@@ -66,11 +66,7 @@ main() {
   cp "templates/date_env_businessName.sh" "$command_file"
   createFile "$command_file"
 
-  #cp "templates/run_local.sh" "run_local_$command_file"
-  #createFile "run_local_$command_file"
-
-  open "$command_file" 
-  # open "run_local_$command_file"
+  open "$command_file"
 }
 
 # Calling main

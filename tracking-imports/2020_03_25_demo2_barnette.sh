@@ -7,6 +7,7 @@
 #
 # Business Name - Barnette Vineyards
 # Demo ID - 1263
+# Prod ID - 10376
 # Reminder Texts - false
 # Welcome Texts - false
 # Export Configurations - n 
@@ -51,6 +52,20 @@ cd ~/importer/server
 # FINAL DEMO (RESOS & GUESTS)
 ./run_importer.sh -e demo -b 1263 -g ../../barnette_guests2.csv -r ../../empty.txt -c "{formatVersion:OPENTABLE_ERB,separator:',', resoDateFormat:YYYY_M_D_DASH,resoTimeFormat:HH_MM_SS, quoteDetectionEnabled: false, smsReminderEnabled: false }"
 
+
+# ------------------------------------------------
+# -                 PRODUCTION                   -
+# ------------------------------------------------
+
+# Must Check BEFORE PROD:
+#  [ ] Pushed configurations? (if necessary)
+#  [ ] Enabled/Disabled Welcome Texts? (-t true)
+#  [ ] No extra guests or reservations in dashboard prod? (unless AM says ok)
+#  [ ] BUSINESS ID FOR PRODUCTION IS THE RIGHT ONE (!!!!!)
+#  [ ] If LARGE file, use nohup to run in background & DO NOT RE-RUN
+
+# PRODUCTION (RESOS & GUESTS)
+./run_importer.sh -e prod -b 10376 -g ../../barnette_guests2.csv -r ../../empty.txt -c "{formatVersion:OPENTABLE_ERB,separator:',', resoDateFormat:YYYY_M_D_DASH,resoTimeFormat:HH_MM_SS, quoteDetectionEnabled: false, smsReminderEnabled: false }"
 
 # ------------------------------------------------
 # -                 END OF IMPORT                -

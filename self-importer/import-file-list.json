@@ -4,14 +4,16 @@
       "file_names": ["Restaurant - Demo Resos - 2020/03/24.csv", "Restaurant - Demo Guests - 2020/03/24.csv"],
       "business_name": "Sushi Dokku",
       "business_id": 10164,
+      "environment": "demo",
       "date_uploaded": "03/25/2020",
       "author": "Wade Mckinney",
-      "status": "READY_FOR_IMPORT"
+      "status": "VALID_AND_READY_FOR_IMPORT"
     },
     {
       "file_names": ["Restaurant - Demo Resos - 2020/03/24.csv", "Restaurant - Demo Guests - 2020/03/24.csv"],
       "business_name": "Booze Box",
       "business_id": 10164,
+      "environment": "demo",
       "date_uploaded": "03/25/2020",
       "author": "Beth Robertson",
       "status": "IMPORT_COMPLETED"
@@ -20,6 +22,7 @@
       "file_names": ["business_resos.csv"],
       "business_name": "Business Name",
       "business_id": 32984,
+      "environment": "demo",
       "date_uploaded": "03/27/2020",
       "author": "Shane Watson",
       "status": "FILE_REJECTED"
@@ -28,6 +31,7 @@
       "file_names": ["business_guests.csv"],
       "business_name": "Business Name",
       "business_id": 12989,
+      "environment": "demo",
       "date_uploaded": "03/27/2020",
       "author": "Shane Watson",
       "status": "FILE_READY_FOR_APPROVAL"

@@ -1,0 +1,58 @@
+{
+  "environment": "demo",
+  "businessId": "1",
+  "bookingSystem": "OPENTABLE_GUESTCENTER",
+  "guests": [
+    {
+      "name": "Billy Joe",
+      "email": "billy@gmail.com",
+      "phone": "8472128492",
+      "guestTags": ["Friendly", "Friend of Chef"],
+      "reservationCount": 42,
+    },{
+      "name": "Jane Smith",
+      "email": "jane@gmail.com",
+      "phone": "8472128292",
+      "guestTags": ["Loud", "Friend of Chef"],
+      "reservationCount": 90,
+    }
+  ],
+  "reservations": [
+    {
+      "date": "2020/05/05 7:00 PM",
+      "name": "Billy Joe",
+      "email": "billy@gmail.com",
+      "phone": "8472128492",
+      "visitTags": ["Friendly", "Friend of Chef"],
+      "visitNotes": ["So sally called and made sure that there was no gluten but ended up having gluten"],
+      "isCancellation": true,
+      "isWalkIn": false,
+      "isNoGuest": false,
+    },
+  ],
+  "tags": [
+    {
+      "name": "PPX",
+      "guestsCount": 832,
+      "reservationsCount": 123,
+    },
+    {
+      "name": "VIP",
+      "guestsCount": 56,
+      "reservationsCount": 938,
+    },
+  ],
+  "thresholds": {
+      "reservationRecordsIncluded": {
+        "min": 70,
+        "max": 80,
+        "average": 75,
+      },
+      "guestRecordsIncluded": {
+        "min": 70,
+        "max": 80,
+        "average": 75,
+      },
+    }
+
+}
