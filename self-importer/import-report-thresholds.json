@@ -1,0 +1,12 @@
+"thresholds": {
+  "reservationRecordsIncluded": {
+    "min": 70,
+    "max": 80,
+    "average": 75,
+  },
+  "guestRecordsIncluded": {
+    "min": 70,
+    "max": 80,
+    "average": 75,
+  },
+}
