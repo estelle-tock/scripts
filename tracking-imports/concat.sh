@@ -20,10 +20,7 @@ exitIfDirectory() {
 }
 
 checkInput() {
-  read -p 'is this OpenTable ERB? y or n: ' open_table_erb
-  if [ "$open_table_erb" == "n" ]; then
-    read -p 'include headers in merge? y or n: ' include_headers
-  fi
+  read -p 'include headers in merge? y or n: ' include_headers
   
   if [[ "$include_headers" != "y" && "$include_headers" != "n" ]]; then
     log r  "invalid option. Please enter y or n."
@@ -47,26 +44,16 @@ checkHeaders() {
     else
       current_headers=$(head -n 1 "$file")
       if [ "$previous_headers" != "$current_headers" ]; then
-        if [ "$include_headers" == "n" ]; then
           log r  "headers in one of the files does not match others"
           log r  "check $file"
           cleanUpOnExit && exit 1
-        else
-          log r "File \"$file\" HEADERS DO NOT MATCH other files."
-          read -p "DO YOU WANT TO CONTINUE? y or n " continue_with_mismatch_headers
-          if [ "$continue_with_mismatch_headers" == "n" ]; then
-            cleanUpOnExit && exit 1
-          fi
-        fi
       fi
       previous_headers="$current_headers"
     fi
     ((i++))
   done
   
-  if [ -z "$continue_with_mismatch_headers" ]; then
-    log g "SUCCESS all headers match!"
-  fi
+  log g "SUCCESS all headers match!"
 }
 
 concat() {
@@ -76,7 +63,7 @@ concat() {
   log  "removing output file $1 if already exist..."
   [ -e file ] && rm "$1"
 
-  if [ "$include_first_line" == "y" ]; then
+  if [ "$include_headers" == "y" ]; then
     cat temp/* > "$1"
   else
     for file in temp/*; do
@@ -161,7 +148,7 @@ main() {
   log  "files in folder..."
   ls temp
 
-  if [ "$open_table_erb" == "n" ]; then
+  if [ "$include_headers" == "n" ]; then
     checkHeaders
   fi
 
