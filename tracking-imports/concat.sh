@@ -105,7 +105,7 @@ peekIntoFolder() {
 convertWindowsToUnix(){
   log  "converting file to unix..."
   cp "$1" "temp.csv" && rm "$1"
-  tr -d '\15\32' < temp.csv  > "$1"
+  # tr -d '\15\32' < temp.csv  > "$1"
   rm temp.csv
 }
 
