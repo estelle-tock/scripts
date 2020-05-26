@@ -21,7 +21,7 @@ exitIfDirectory() {
 
 checkInput() {
   read -p 'include headers in merge? y or n: ' include_headers
-  
+
   if [[ "$include_headers" != "y" && "$include_headers" != "n" ]]; then
     log r  "invalid option. Please enter y or n."
     exit 1
@@ -52,7 +52,7 @@ checkHeaders() {
     fi
     ((i++))
   done
-  
+
   log g "SUCCESS all headers match!"
 }
 
@@ -61,10 +61,15 @@ concat() {
   local i=1
 
   log  "removing output file $1 if already exist..."
-  [ -e file ] && rm "$1"
+  if [ -f "$1" ]; then
+    rm "$1"
+  fi
 
   if [ "$include_headers" == "y" ]; then
-    cat temp/* > "$1"
+    for file in temp/*; do
+      log  "copying file $file with headers into $1..."
+      (cat "$file"; echo '') >> "$1"
+    done
   else
     for file in temp/*; do
       exitIfDirectory "$file"
@@ -104,8 +109,9 @@ peekIntoFolder() {
 
 convertWindowsToUnix(){
   log  "converting file to unix..."
+  log  "(if this fails, your file is probably in excel format)"
   cp "$1" "temp.csv" && rm "$1"
-  # tr -d '\15\32' < temp.csv  > "$1"
+  tr -d '\15\32' < temp.csv  > "$1"
   rm temp.csv
 }
 
@@ -162,10 +168,11 @@ main() {
   echo  "Total Number of files in folder: $(ls temp | wc -l)"
   echo  "Total number of lines from all files: \n $(find ./temp/* -name '*' -print0 | xargs -0 wc -l)"
   echo  "Number of lines in new file: $(wc -l "$2")"
-  echo  "Hint: number of lines should match before and after."
+  echo  "Hint: extra line added at end of each file if headers were included."
   echo  ""
   echo   "----------------- DATA --------------------"
   echo  "$(head -n2 "$2")" && echo  "" && echo  "skipping to two last lines..." && echo  "" && tail -n2 "$2"
+  echo  ""
   echo   "-------------------------------------------"
 
   cleanUpOnExit && exit 1
