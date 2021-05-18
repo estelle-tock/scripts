@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-secondary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1226.5, 725}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, SUBSTRING_INDEX(pur.created_at, ' ', 1) AS created_date, MAKETIME(SUBSTRING_INDEX(pur.created_at, ' ', 2)) AS created_time, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL;
+
+
+-- manually inserted by anneliese/mike
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, pur.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is NULL
+and pur.edited_by_patron_id in (16089971,79213900);
+
+-- number of total reservations
+select  count(*)
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889;
+
+
+-- anneliese@tockhq.com, mike@tockhq.com
+
+select id from patron where email in ('mike@tockhq.com', 'anneliese@tockhq.com');
+
+-- Katina Bell Reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, pat.status, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and pat.first_name='Katina' and pat.last_name='Bell';
+
+select * from patron where email='katina@test.com';
+
+
+
+
+
+</string>
+			<key>table</key>
+			<string>purchase</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>309.5</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, SUBSTRING_INDEX(pur.created_at, ' ', 1) AS created_date, TIME(SUBSTRING_INDEX(pur.created_at, ' ', 2)) AS created_time, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, SUBSTRING_INDEX(pur.created_at, ' ', 1) AS created_date, SUBSTRING_INDEX(pur.created_at, ' ', 2) AS created_time, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, SUBSTRING_INDEX(pur.created_at, ' ', 1) AS created_date, SUBSTRING_INDEX(pur.created_at, ' ', 3) AS created_time, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, SUBSTRING_INDEX(pur.created_at, ' ', 1) AS created_date, SUBSTRING_INDEX(pur.created_at, ' ', 1) AS created_time, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, pur.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>-- manually inserted by anneliese/mike
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, pur.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is NULL
+and pur.edited_by_patron_id in (16089971,79213900)</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, pur.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>select * from patron where email='katina@test.com'</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, pat.status, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and pat.first_name='Katina' and pat.last_name='Bell'</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and pat.first_name='Katina' and pat.last_name='Bell'</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and pat.first_name='Katina', pat.last_name='Bell'</string>
+		<string>-- manually inserted by anneliese/mike
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is NULL
+and pur.edited_by_patron_id in (16089971,79213900)</string>
+		<string>-- imported reservations
+select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and not pat.first_name='Katina' and not pat.last_name='Bell'</string>
+		<string>select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and pat.first_name='Katina' and pat.last_name='Bell'</string>
+		<string>select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and pur.first_name='Katina' and pur.last_name='Bell'</string>
+		<string>select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL
+and v.first_name='Katina' and v.last_name='Bell'</string>
+		<string>select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is not NULL</string>
+		<string>select  pur.date as visit_date, pur.start_time as visit_time, v.table_name,pat.first_name, pat.last_name,  pat.email, pat.phone, pat.id as patron_id, v.is_cancelled, v.business_id, v.id, v.created_at, v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join purchase_import pi on pi.purchase_id=pur.id
+where v.business_id=20889
+and pi.purchase_id is NULL
+and pur.edited_by_patron_id in (16089971,79213900)</string>
+		<string>-- anneliese@tockhq.com, mike@tockhq.com
+
+select id from patron where email in ('mike@tockhq.com', 'anneliese@tockhq.com')</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.5.6-MariaDB-1:10.5.6+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

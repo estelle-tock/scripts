@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-secondary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilter</key>
+			<dict/>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1242, 725}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>select visit.id, visit.purchase_id, visit.service_date, visit.business_id, visit.table_name, visit_tag.tag, visit.created_at from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 50;
+
+
+select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 25;</string>
+			<key>table</key>
+			<string>business_group_tag</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>294</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select * from business_group_tag where business_group_id=8646 and business_id=11661 and LENGTH(tag) &gt; 25</string>
+		<string>select * from business_group_tag where business_group_id=8646 and business_id=11661</string>
+		<string>select * from business where business_group_id=8646</string>
+		<string>select * from business where id=11661</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 25</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 50</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 25</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 75</string>
+		<string>select visit.service_date, purchase.start_time, visit.table_name, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 75</string>
+		<string>select visit.service_date, visit.table_name, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 75</string>
+		<string>select visit.service_date, visit.table_name, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 75</string>
+		<string>select visit.service_date, visit.table_name, visit_tag.tag, patron.first_name, patron.last_name from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(visit_tag.tag) &gt; 75</string>
+		<string>select visit.service_date, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(tag) &gt; 75</string>
+		<string>select visit.service_date, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(tag) &gt; 80</string>
+		<string>select visit.service_date, visit.business_id, visit.created_at, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30 00:00:00' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(tag) &gt; 50</string>
+		<string>select visit.service_date, visit.business_id, visit.created_at, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30' and visit.created_at &lt; '2020-04-30 23:00:00'
+and LENGTH(tag) &gt; 50</string>
+		<string>select visit.service_date, visit.business_id, visit.created_at, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and visit.created_at &gt; '2020-04-30' and visit.created_at &lt; '2020-05-01'
+and LENGTH(tag) &gt; 50</string>
+		<string>select visit.service_date, visit.business_id, visit.created_at, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 50</string>
+		<string>select visit.service_date, visit.business_id, visit.created_at, visit.table_name, visit_tag.tag, from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 50</string>
+		<string>select visit.service_date, visit.business_id,  visit.created_at, visit.table_name, visit_tag.tag, from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 50</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

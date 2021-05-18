@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-primary-0</string>
+			<key>kcid</key>
+			<string>7507163559566313096</string>
+			<key>name</key>
+			<string>PROD-WRITE-BE-CAREFUL</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_prod5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYoWE5TT2JqZWN0AAgAEQAaACQAKQAy
+			ADcASQBMAFEAUwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgA
+			nQC9AMIAzwDRANMA2ADjAOwA9wD6AQUBDgETASABIwAAAAAAAAIB
+			AAAAAAAAACkAAAAAAAAAAAAAAAAAAAEs
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>select * from business where id=18481;
+
+
+-- pull guest ids created from run 1 (chunk 0-1)
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 17:35:00' and g.created_at &lt; '2020-08-04 17:37:00'
+and g.updated_at &lt;= '2020-08-04 17:37:00'
+and pur.id is null;
+
+-- pull purchase ids created from run 1 (chunk 0-1)
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00'
+and v.is_cancelled=0;
+
+
+-- pull guest ids created from run 3 (chunk 0-5)
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 18:18:00' and g.created_at &lt; '2020-08-04 18:23:00'
+and g.updated_at &lt;= '2020-08-04 18:23:00'
+and pur.id is null;
+
+-- pull purchase ids created from run 3 (chunk 0-5)
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 18:18:00' and v.created_at &lt; '2020-08-04 18:23:00'
+and v.updated_at &lt; '2020-08-04 18:23:00'
+and v.is_cancelled=0;
+
+
+-- GUESTS REMEDIATION RUN 1 --
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 17:35:00' and g.created_at &lt; '2020-08-04 17:37:00'
+and g.updated_at &lt;= '2020-08-04 17:37:00'
+and pur.id is null;
+
+update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 17:35:00' and g.created_at &lt; '2020-08-04 17:37:00'
+and g.updated_at &lt;= '2020-08-04 17:37:00'
+	and p.id is null;
+	
+-- GUESTS REMEDIATION RUN 3 --
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 18:18:00' and g.created_at &lt; '2020-08-04 18:23:00'
+and g.updated_at &lt;= '2020-08-04 18:23:00'
+and pur.id is null;
+
+update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 18:18:00' and g.created_at &lt; '2020-08-04 18:23:00'
+and g.updated_at &lt;= '2020-08-04 18:23:00'
+	and p.id is null;
+	
+-- RESO REMEDIATION RUN 1 --
+select pur.id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00'
+and v.is_cancelled=0;
+
+-- RESO REMEDIATION RUN 3 --
+select pur.id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 18:18:00' and v.created_at &lt; '2020-08-04 18:23:00'
+and v.updated_at &lt; '2020-08-04 18:23:00'
+and v.is_cancelled=0;
+
+-- REMEDATION VALIDATION --
+
+-- RESO REMEDIATION RUN 1 --
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00';
+
+select * from purchase pur
+where pur.business_id=18481
+and pur.created_at &gt; '2020-08-04 17:35:00' and pur.created_at &lt; '2020-08-04 17:37:00'
+and pur.updated_at &lt; '2020-08-04 17:37:00';
+
+-- RESO REMEDIATION RUN 3 --
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 18:18:00' and v.created_at &lt; '2020-08-04 18:23:00'
+and v.updated_at &lt; '2020-08-04 18:23:00';</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>266.5</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select * from patron 
+left outer join visit on visit.patron_id=patron.id
+where patron.id=4740824</string>
+		<string>select * from patron where id=4740824</string>
+		<string>-- patron id=4740824
+
+select patron.id, patron.first_name, patron.last_name, patron.email, patron.phone,visit.service_date, purchase.start_time, purchase.ticket_count as party_size, vspst.table_name 
+from purchase 
+left outer join visit on visit.purchase_id=purchase.original_purchase_id
+left outer join patron on visit.patron_id=patron.id
+left outer join visit_summary_party_snapshot_table_id vspsti on visit.current_snapshot_visit_id=vspsti.visit_id
+left outer join visit_summary_party_snapshot_table vspst on vspsti.table_id=vspst.table_name
+where purchase.original_patron_id=4740824</string>
+		<string>-- patron id=4740824
+
+select patron.id, patron.first_name, patron.last_name, patron.email, patron.phone,visit.service_date, purchase.start_time, purchase.ticket_count as party_size, vspst.table_name 
+from purchase 
+left outer join visit on visit.purchase_id=purchase.original_purchase_id
+left outer join patron on visit.patron_id=patron.id
+left outer join visit_summary_party_snapshot_table_id vspsti on visit.current_snapshot_visit_id=vspsti.visit_id
+left outer join visit_summary_party_snapshot_table vspst on vspsti.table_id=vspst.table_name
+where patron.original_patron_id=4740824</string>
+		<string>-- patron id=4740824
+
+select patron.id, patron.first_name, patron.last_name, patron.email, patron.phone,visit.service_date, purchase.start_time, purchase.ticket_count as party_size, vspst.table_name 
+from purchase 
+left outer join visit on visit.purchase_id=purchase.original_purchase_id
+left outer join patron on visit.patron_id=patron.id
+left outer join visit_summary_party_snapshot_table_id vspsti on visit.current_snapshot_visit_id=vspsti.visit_id
+left outer join visit_summary_party_snapshot_table vspst on vspsti.table_id=vspst.table_name
+where visit.original_patron_id=4740824</string>
+		<string>select * from purchase where original_purchase_id=84845412</string>
+		<string>select * from purchase where purchase.id=84845412</string>
+		<string>select patron.id, patron.first_name, patron.last_name, patron.email, patron.phone,visit.service_date, purchase.start_time, purchase.ticket_count as party_size, vspst.table_name 
+from purchase 
+left outer join visit on visit.purchase_id=purchase.original_purchase_id
+left outer join patron on visit.patron_id=patron.id
+left outer join visit_summary_party_snapshot_table_id vspsti on visit.current_snapshot_visit_id=vspsti.visit_id
+left outer join visit_summary_party_snapshot_table vspst on vspsti.table_id=vspst.table_name
+where purchase.id=84845412</string>
+		<string>select patron.id, patron.first_name, patron.last_name, patron.email, patron.phone,visit.service_date, purchase.start_time, purchase.ticket_count as party_size, vspst.table_name 
+from purchase 
+left outer join visit on visit.purchase_id=purchase.original_purchase_id
+left outer join patron on visit.patron_id=patron.id
+left outer join visit_summary_party_snapshot_table_id vspsti on visit.current_snapshot_visit_id=vspsti.visit_id
+left outer join visit_summary_party_snapshot_table vspst on vspsti.table_id=vspst.table_name
+where purchase.id=94276008</string>
+		<string>select * from purchase where purchase.id=94276008</string>
+		<string>select * from purchase where purchase_id=94276008</string>
+		<string>select * from purchases where purchase_id=94276008</string>
+		<string>select * from purchase where original_purchase_id=94276008</string>
+		<string>select * from purchase pur
+where pur.business_id=18481
+and pur.created_at &gt; '2020-08-04 17:35:00' and pur.created_at &lt; '2020-08-04 17:37:00'
+and pur.updated_at &lt; '2020-08-04 17:37:00'</string>
+		<string>-- REMEDATION VALIDATION --
+
+-- RESO REMEDIATION RUN 1 --
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00'</string>
+		<string>-- GUESTS REMEDIATION RUN 1 --
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=6329
+and g.created_at &gt; '2020-08-04 17:35:00' and g.created_at &lt; '2020-08-04 17:37:00'
+and g.updated_at &lt;= '2020-08-04 17:37:00'
+and pur.id is null</string>
+		<string>-- RESO REMEDIATION RUN 1 --
+select pur.id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00'</string>
+		<string>-- RESO REMEDIATION RUN 3 --
+select pur.id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 18:18:00' and v.created_at &lt; '2020-08-04 18:23:00'
+and v.updated_at &lt; '2020-08-04 18:23:00'
+and v.is_cancelled=0</string>
+		<string>-- RESO REMEDIATION RUN 1 --
+select pur.id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00'
+and v.is_cancelled=0</string>
+		<string>-- RESO REMEDIATION RUN 1 --
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=18481
+and v.created_at &gt; '2020-08-04 17:35:00' and v.created_at &lt; '2020-08-04 17:37:00'
+and v.updated_at &lt; '2020-08-04 17:37:00'
+and v.is_cancelled=0</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

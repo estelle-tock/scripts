@@ -109,13 +109,19 @@ cd ~/importer/server
 
 
 
-# -------------- UPDATE SALESFORCE ---------------
-# Comment with commands and steps used for import
-# Update Status
+# -------- POST IMPORT CHECKLIST (For ENG) --------
 # Update with number of lines in each file
+# Update with runtime
 # Update with number of records imported for resos (Reports > Item Sales > 2000-01-01 to today)
 # Update with number of records imported for guests (Guests tab)
 # Update with number of records imported for waitlist (Operations > Waitlist)
 # Pick out some guests and make sure they're in dashboard
+# ------------------------------------------------
+
+# -------------- UPDATE SALESFORCE ---------------
+# Comment with commands and steps used for import
 # Update with time completed on Account Page > Details > Import for Eng
+# Update Done Status
+# Update any reason for delay
+# Update slack with import completion
 # ------------------------------------------------

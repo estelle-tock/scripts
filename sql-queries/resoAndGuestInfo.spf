@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_estelle</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-759467013896072806</string>
+			<key>name</key>
+			<string>local</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tocktix</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 444}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- guest information
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join patron pat on pat.id=g.patron_id;
+
+-- visit and purchase information
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, 
+pur.date, pur.start_time, 
+pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone,
+booking_note.note
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join booking_note on booking_note.purchase_id=pur.id
+where v.business_id=1
+and v.is_cancelled=0;
+
+select * from import;
+
+select * from business where id=1;
+
+</string>
+			<key>table</key>
+			<string>booking_note</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>315</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- guest information
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join patron pat on pat.id=g.patron_id</string>
+		<string>-- guest information
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id</string>
+		<string>-- guest information
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=1</string>
+		<string>-- guest information
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=1
+and pur.id is null</string>
+		<string>-- visit and purchase information
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, 
+pur.date, pur.start_time, 
+pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone,
+booking_note.note
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join booking_note on booking_note.purchase_id=pur.id
+where v.business_id=1
+and v.is_cancelled=0</string>
+		<string>-- visit and purchase information
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+left outer join booking_note on booking_note.purchase_id=pur.id
+where v.business_id=1
+and v.is_cancelled=0</string>
+		<string>-- visit and purchase information
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=1
+and v.is_cancelled=0</string>
+		<string>select patron.id as patron_id, patron.email, patron.first_name, patron.last_name, patron.phone, gt.tag, n.note from patron 
+left outer join guest_profile on guest_profile.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select patron.id as patron_id, patron.email, patorn.first_name, patron.last_name, patron.phone, gt.tag, n.note from patron 
+left outer join guest_profile on guest_profile.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select * from patron 
+left outer join guest_profile on guest_profile.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select * from patron 
+left outer join guest_profile on guest_profile.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, 
+patron.id as patron_id, patron.first_name, patron.last_name, patron.email, patron.phone, n.note as guest_note, bn.note as visit_note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id
+left outer join booking_note bn on bn.purchase_id=purchase.id</string>
+		<string>-- pull guest ids created from run 3 (chunk 0-5)
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=1
+and pur.id is null</string>
+		<string>-- pull purchase ids created from run 3 (chunk 0-5)
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=1
+and v.is_cancelled=0</string>
+		<string>select * from business where id=1</string>
+		<string>select * from import</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, 
+patron.id as patron_id, patron.first_name, patron.last_name, patron.email, patron.phone, n.note as guest_note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id
+left outer join booking_note bn on bn.purchase_id=purchase.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, 
+patron.id as patron_id, patron.first_name, patron.last_name, patron.email, patron.phone, n.note as guest_note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, 
+patron.id as patron_id, patron.first_name, patron.last_name, patron.email, patron.phone, n.note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone, n.note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.5.6-MariaDB-1:10.5.6+maria~focal-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

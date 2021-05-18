@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_demo</string>
+			<key>host</key>
+			<string>db-demo-primary-0</string>
+			<key>kcid</key>
+			<string>-5531843890415766372</string>
+			<key>name</key>
+			<string>demo</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tocktix5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilter</key>
+			<dict/>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{754, 0}, {1316, 648}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- 83 businesses that were imported to a demo site in 2020 have an account that’s pending
+select distinct business_id from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'; 
+
+
+-- 24 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, b.name, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, b.name, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role IS NULL;
+
+-- 654 businesses imported to a demo site in 2020
+select distinct rb.business_id from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and rb.created_at&gt;'2020-01-01'; 
+
+
+-- from the 24 demo sites that has only pending roles, how many of those had a prod import
+select * from business b 
+join ticket_type t on t.business_id=b.id
+where t.short_code='IMR'
+and b.id in (10280, 10333, 9395, 10654, 10910, 12295, 16785, 16588, 10065, 11527, 14752, 4840, 17536, 17475, 8907, 17847, 10790, 18777, 8900, 15611, 17694, 19711, 17512, 19042, 19538);
+
+
+
+
+</string>
+			<key>table</key>
+			<string>ticket_type</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>220</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>--
+-- 24 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select t1.business_id from
+(select rb.business_id, b.name, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, b.name, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role IS NULL</string>
+		<string>-- 24 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, b.name, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, b.name, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role IS NULL</string>
+		<string>-- 24 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select b.id, b.name, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role IS NULL</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role IS NULL</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+cross join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+full join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+full outer join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+union
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+outer join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_pending_role IS NULL</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role IS NULL</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_pending_role=NULL</string>
+		<string>-- 83 businesses that were imported to a demo site in 2020 have only accounts that are pending
+select * from
+(select rb.business_id, count(distinct p.status) as has_active_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=0
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t1
+left join
+(select rb.business_id, count(distinct p.status) as has_pending_role from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+group by rb.business_id ) t2
+on
+(t1.business_id=t2.business_id)
+where has_active_role=NULL</string>
+		<string>select rb.business_id, count(distinct p.status) from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+and rb.business_id=2964
+group by rb.business_id</string>
+		<string>select count(distinct p.status) from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+and rb.business_id=2964
+group by rb.business_id</string>
+		<string>select count(*) from role_business rb
+join patron p on p.id=rb.patron_id
+join business b on b.id=rb.business_id
+join ticket_type t on t.business_id=b.id
+and b.name LIKE '%demo%'
+and b.name NOT LIKE '%final%'
+and t.short_code='IMR'
+and p.status=2
+and p.email NOT LIKE '%tockhq.com%'
+and rb.created_at&gt;'2020-01-01'
+and rb.business_id=2964
+group by rb.business_id</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.5.6-MariaDB-1:10.5.6+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

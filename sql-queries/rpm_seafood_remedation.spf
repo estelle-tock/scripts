@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-primary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- guests that don't have visits RPM Seafood Prod
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=40 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-30 21:30:45' and guest_profile.created_at &lt; '2020-06-30 21:34:29'
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name);
+
+
+select * from business where id=14439;
+
+
+-- guests that were created using clowncar today total (9286)
+select * from guest_profile
+where business_group_id=40 and created_by=1
+and version=1
+and created_at &gt; '2020-06-30 21:30:45' and created_at &lt; '2020-06-30 22:53:00'
+group by nick_name;
+
+-- guests that were created using clowncar today w/o same name (9422)
+select * from guest_profile
+where business_group_id=40 and created_by=1
+and version=1
+and created_at &gt; '2020-06-30 21:30:45' and created_at &lt; '2020-06-30 22:53:00';
+
+select * from guest_profile
+where guest_profile.business_group_id=40
+and guest_profile.created_at &gt; '2020-06-30 21:30:45' and guest_profile.created_at &lt; '2020-06-30 21:34:29';
+
+-- guests created that don't have a purchase and were not updated (4556)
+select * from guest_profile g
+left outer join patron pat on pat.id=g.patron_id
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt; '2020-06-30 21:34:29'
+and pur.id is null
+and pat.email is null;
+
+
+-- visits that were created using clowncar today (5818)
+select * from visit
+where business_id=14439
+and created_at &gt; '2020-06-30 21:30:45' and created_at &lt; '2020-06-30 21:34:29';
+
+
+-- visits that were created using clowncar today that were not cancelled manually - future resos cancelled manually by team (5753)
+select * from visit
+where business_id=14439
+and created_at &gt; '2020-06-30 21:30:45' and created_at &lt; '2020-06-30 21:34:29'
+and updated_at &lt; '2020-06-30 21:34:29'
+and service_date &lt; '2020-07-02';
+
+-- visits that were missed from manually cancelling
+select * from visit
+where business_id=14439
+and created_at &gt; '2020-06-30 21:30:45' and created_at &lt; '2020-06-30 21:34:29'
+and updated_at &lt; '2020-06-30 21:34:29'
+and service_date &gt; '2020-07-02'
+and visit.is_cancelled=0;
+
+
+-- VISIT REMEDIATION --
+
+-- visit information as seen on dashboard (manually cancelling - cancelled the other duplicate that was created from not this run)
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled as visit_cancelled, pur.is_cancelled as purchase_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and v.service_date &gt; '2020-07-02'
+and v.is_cancelled=0;
+
+-- visit information as seen on dashboard (all that require cancelling, minus the 24 above - so we dont incorrectly cancel someone's reservation)
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02'
+and v.is_cancelled=0;
+
+
+
+-- just pull 2020-01-15 as a first-run test
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date = '2020-01-15'
+and v.is_cancelled=0;
+
+
+-- do the remaining visits
+select v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02'
+and v.is_cancelled=0;
+
+
+-- GUESTS REMEDIATION --
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt;= '2020-06-30 21:34:29'
+and pur.id is null;
+
+update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=40 
+	and g.created_at &gt; '2020-06-30 21:30:45'
+	and g.created_at &lt; '2020-06-30 21:34:29'
+	and g.updated_at &lt;= '2020-06-30 21:34:29'
+	and p.id is null;
+</string>
+			<key>table</key>
+			<string>purchase</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>111.5</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- GUESTS REMEDIATION --
+select g.id, g.business_group_id, g.is_archived, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt;= '2020-06-30 21:34:29'
+and pur.id is null</string>
+		<string>-- GUESTS REMEDIATION --
+select g.id, g.business_group_id, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt;= '2020-06-30 21:34:29'
+and pur.id is null</string>
+		<string>-- GUESTS REMEDIATION --
+select g.id, g.business_group_id, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at, g.updated_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt;= '2020-06-30 21:34:29'
+and pur.id is null
+and pat.email is null</string>
+		<string>-- GUESTS REMEDIATION --
+select g.id, g.business_group_id, pat.first_name, pat.last_name, pat.email, pat.phone, g.created_at from guest_profile g
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+left outer join patron pat on pat.id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt;= '2020-06-30 21:34:29'
+and pur.id is null
+and pat.email is null</string>
+		<string>-- GUESTS REMEDIATION --
+
+select * from guest_profile g
+left outer join patron pat on pat.id=g.patron_id
+left outer join purchase pur on pur.original_patron_id=g.patron_id
+where g.business_group_id=40
+and g.created_at &gt; '2020-06-30 21:30:45' and g.created_at &lt; '2020-06-30 21:34:29'
+and g.updated_at &lt; '2020-06-30 21:34:29'
+and pur.id is null
+and pat.email is null</string>
+		<string>-- do the remaining visits
+select v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02'
+and v.is_cancelled=0</string>
+		<string>-- visit information as seen on dashboard (all that require cancelling, minus the 24 above - so we dont incorrectly cancel someone's reservation)
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02'
+and v.is_cancelled=0</string>
+		<string>select v.purchase_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date = '2020-01-15'
+and v.is_cancelled=0</string>
+		<string>select pur.id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date = '2020-01-15'
+and v.is_cancelled=0</string>
+		<string>-- just pull 2020-01-15 as a first-run test
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date = '2020-01-15'
+and v.is_cancelled=0</string>
+		<string>-- just pull 2020-01-15 as a first-run test
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date is '2020-01-15'
+and v.is_cancelled=0</string>
+		<string>-- just pull 2020-01-15 as a first-run test
+select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-01-15'
+and v.is_cancelled=0</string>
+		<string>select v.business_id, v.id, v.created_at, v.updated_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pur.subtotal, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+-- and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02' and pur.date &gt; '2020-06-27'
+and v.is_cancelled=0
+and pat.first_name='Awni'</string>
+		<string>select v.business_id, v.id, v.created_at, v.created_by, v.updated_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+-- and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02' and pur.date &gt; '2020-06-27'
+and v.is_cancelled=0
+and pat.first_name='Awni'</string>
+		<string>select v.business_id, v.id, v.created_at, v.updated_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+-- and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02' and pur.date &gt; '2020-06-27'
+and v.is_cancelled=0
+and pat.first_name='Awni'</string>
+		<string>select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+-- and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02' and pur.date &gt; '2020-06-27'
+and v.is_cancelled=0
+and pat.first_name='Awni'</string>
+		<string>select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02' and pur.date &gt; '2020-06-27'
+and v.is_cancelled=0
+and pat.first_name='Awni'</string>
+		<string>select v.business_id, v.id, v.created_at, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+-- and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02' and pur.date &gt; '2020-06-27'
+and v.is_cancelled=0</string>
+		<string>-- visit information as seen on dashboard (all that require cancelling, minus the 24 above - so we dont incorrectly cancel someone's reservation)
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and pur.date &lt; '2020-07-02'
+and v.is_cancelled=0</string>
+		<string>-- visit information as seen on dashboard (all that require cancelling, minus the 24 above - so we dont incorrectly cancel someone's reservation)
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where v.business_id=14439
+and v.created_at &gt; '2020-06-30 21:30:45' and v.created_at &lt; '2020-06-30 21:34:29'
+and v.updated_at &lt; '2020-06-30 21:34:29'
+and p.date &lt; '2020-07-02'
+and v.is_cancelled=0</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

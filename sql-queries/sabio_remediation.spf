@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-secondary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>select count(*) from visit where business_id=16298;
+select count(*) from patron where created_by_business=16298;
+
+
+select * from patron where email='eryorulmaz@gmail.com';
+select id, business_group_id, created_at, patron_id, nick_name from guest_profile where patron_id=21927552;
+select * from patron where id=21927552;
+
+
+select * from guest_profile where created_by=11120;
+
+select * from patron where created_by_business=11120 order by created_at ASC;
+
+
+select * from business where id=14549;
+select * from business where business_group_id=10874;
+
+-- not dupes: 975
+select * from patron where created_by_business=11120 AND created_at &lt; '2020-06-19 16:53:27';
+
+-- dupes: 29448 -&gt; 15132
+select * from patron where created_by_business=11120 AND created_at &gt; '2020-06-19 16:53:27' and created_at &lt; '2020-06-19 17:09:00';
+-- put in a map
+-- decide which one of the two to keep
+
+ group by first_name, last_name, email, phone, iso_country_code, phone_country_code, has_tock_time;
+
+select * from guest_profile where business_group_id=8200 AND created_at &gt; '2020-06-19 16:53:27' group by first_name, last_name, email, nick_name;
+
+-- guests that don't have visits (DTB)
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=8200 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:53:27' and guest_profile.created_at &lt; '2020-06-19 17:09:00'
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name);
+
+-- guests that don't have visits (SABIO)
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-22 8:53:27' and guest_profile.created_at &lt; '2020-06-22 10:09:00'
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name);
+
+-- guests that were created today (Sabio) 10559
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-22 14:06:43' and guest_profile.created_at &lt; '2020-06-22 14:08:43';
+
+-- guests that were created w/ guests only (Sabio) 11487
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:42:36';
+
+-- guests that were created w/ guests only that were updated after import (Sabio) 933
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:42:36' and updated_at&gt;'2020-06-19 16:42:36';
+
+-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (Sabio) 10554
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-19 16:30:02' 
+	and guest_profile.created_at &lt; '2020-06-19 16:41:36' 
+	and guest_profile.updated_at &lt; '2020-06-19 16:41:36' 
+	and purchase.id is null;
+
+-- 11,487 guests were imported w/ no historical reservations
+-- 10,554 of those guests were not updated after the import
+-- 993 of those guests were updated after the import
+-- 10,559 guests were re-imported w/ historical reseration information
+-- 10,554 guests that were created w/ no historical reservations were not updated again &amp; have no reservations associated with them - are safe to be archived
+-- 778 were updated over the weekend w/ reservations. -- will not be archived &amp; have duplicate guests information (one w/ historical &amp; one with reservations from over the weekend)
+-- 152 were updated over the weekend w/o reservations -- will not be archived &amp; have duplicate guests information (one w/ profile information from improt &amp; one with profile changes from over the weekend)
+
+	
+update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=10874 
+	and p.email is null
+	and g.created_at &gt; '2020-06-19 16:30:02' 
+	and g.created_at &lt; '2020-06-19 16:41:36' 
+	and g.updated_at &lt; '2020-06-19 16:41:36' 
+	and p.id is null;
+
+</string>
+			<key>table</key>
+			<string>guest_profile</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>216</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (Sabio) 10554
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-19 16:30:02' 
+	and guest_profile.created_at &lt; '2020-06-19 16:41:36' 
+	and guest_profile.updated_at &lt; '2020-06-19 16:41:36' 
+	and purchase.id is null</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it (Sabio) 10397
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-19 16:30:02' 
+	and guest_profile.created_at &lt; '2020-06-19 16:41:36' 
+	and guest_profile.updated_at&lt;'2020-06-19 16:41:36' 
+	and purchase.id is null</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36' 
+and purchase.id is null)</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it and has an email (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is not null
+and guest_profile.updated_at&lt;'2020-06-19 16:42:36')</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it and has an email (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is not null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36')</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it and has an email (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is not null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36' 
+and purchase.id is null)</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36' 
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name)</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&gt;'2020-06-19 16:42:36' 
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name)</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&gt;'2020-06-19 16:42:36' 
+and purchase.id is not null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name)</string>
+		<string>-- guests that were created w/ guests only that were updated after import (Sabio) 933
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:42:36' and updated_at&lt;'2020-06-19 16:42:36'</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it (Sabio)
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36' 
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name)</string>
+		<string>-- guests that were created today (Sabio)
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-22 14:06:43' and guest_profile.created_at &lt; '2020-06-22 14:08:43'</string>
+		<string>-- guests that were created w/ guests only (Sabio)
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:42:36'</string>
+		<string>select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:42:36'</string>
+		<string>-- guests that were created w/ guests only (Sabio)
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:42:36' and updated_at&gt;'2020-06-19 16:42:36'</string>
+		<string>-- guests that were created w/ guests only (Sabio)
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and updated_at&gt;'2020-06-19 16:42:36'</string>
+		<string>-- guests that were created w/ guests only (Sabio)
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and updated_at&lt;'2020-06-19 16:42:36'</string>
+		<string>select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36'</string>
+		<string>(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36' 
+and purchase.id is null
+group by guest_profile.first_name, guest_profile.last_name, guest_profile.email, guest_profile.nick_name)</string>
+		<string>-- guests that were created today (Sabio)
+select * from guest_profile where guest_profile.business_group_id=10874 and guest_profile.created_at &gt; '2020-06-22 8:53:27' and guest_profile.created_at &lt; '2020-06-22 10:09:00'</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

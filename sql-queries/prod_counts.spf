@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-secondary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentFilter</key>
+			<dict/>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1222, 725}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>select * from business where id=11661;
+select count(*) from visit where business_id=11923;
+select count(*) from guest_profile where business_group_id=8866 and created_at &gt; '2020-07-14';
+
+select * from import where business_id=14096;</string>
+			<key>table</key>
+			<string>visit</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>314</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select count(*) from guest_profile where business_group_id=13834 and created_at &gt; '2020-09-10'</string>
+		<string>select count(*) from visit where business_id=18538</string>
+		<string>select * from business where id=18538</string>
+		<string>select count(*) from guest_profile where business_group_id=14133 and created_at &gt; '2020-08-18'</string>
+		<string>select count(*) from visit where business_id=18903</string>
+		<string>select * from business where id=18903</string>
+		<string>select * from import where business_id=16509</string>
+		<string>select count(*) from guest_profile where business_group_id=13820 and created_at &gt; '2020-08-17'</string>
+		<string>select count(*) from visit where business_id=18524</string>
+		<string>select * from business where id=18524</string>
+		<string>select count(*) from guest_profile where business_group_id=11527 and created_at &gt; '2020-07-16'</string>
+		<string>select count(*) from visit where business_id=15379</string>
+		<string>select * from business where id=15379</string>
+		<string>select visit.id, visit.purchase_id, visit.service_date, visit.business_id, visit.table_name, visit_tag.tag, visit.created_at from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 150</string>
+		<string>select visit.id, visit.purchase_id, visit.service_date, visit.business_id, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 150</string>
+		<string>select visit.id, visit.purchase_id, visit.service_date, visit.business_id, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 100</string>
+		<string>select visit.id, visit.purchase_id, visit.business_id, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LENGTH(tag) &gt; 100</string>
+		<string>select visit.id, visit.purchase_id, visit.business_id, visit.table_name, visit_tag.tag from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661
+and LEN(tag) &gt; 100</string>
+		<string>select * from visit
+left outer join visit_tag on visit.id=visit_tag.visit_id
+where visit.business_id=11661</string>
+		<string>select * from visit
+left outer join visit_tag where visit.id=visit_tag.visit_id
+where visit.business_id=11661</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

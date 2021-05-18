@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-secondary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA1OlUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApSaWTSIiMxMl8QD05TTXV0YWJsZVN0cmlu
+			Z6MxMzRYTlNTdHJpbmdYTlNPYmplY3TSIiM2N15OU011dGFibGVB
+			cnJheaM2ODlXTlNBcnJheVhOU09iamVjdNIiIyY7oiY8WE5TT2Jq
+			ZWN0AAgAEQAaACQAKQAyADcASQBMAFEAUwBhAGcAbgB2AIEAiACM
+			AI4AkACSAJYAmACaAJwAngCjAKgArQDWAN0A3gDfAOEA5gDxAPoB
+			EAEUASEBKgEvATEBMwE1AToBRAFGAUkBTgFgAWQBbQF2AXsBigGO
+			AZYBnwGkAacAAAAAAAACAQAAAAAAAAA9AAAAAAAAAAAAAAAAAAAB
+			sA==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>-- rachel.karitis@gmail.com (11), jedrosss@hotmail.com (2), jparlato@comcast.net (missing in prod and chunk 11 - which means it s not in chunk 11)
+
+-- paige.ashley.chan@gmail.com, barbiecedillo@hotmail.com (already in prod, included in chunk 11)
+
+
+
+-- thip khao chunk 2 emails
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.`last_updated_by_import_id`
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856 and
+pat.email in ('sarah.aheron@gmail.com');
+
+
+-- thip khao chunk 11 emails (NOT FOUND)
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.`last_updated_by_import_id`
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856 and
+pat.email in ('meganashley.randall@gmail.com', 'ejoffe27@gmail.com', 'rodriguez.justinm@gmail.com', 'auerbach.adam@gmail.com', 'mhoward2012@yahoo.com', 'rkabuanbar@gmail.com', 'kmjoss@gmail.com');
+
+select * from import where business_id=13856;
+
+-- thip khao chunk 10 time window
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:23' and updated_at &lt; '2020-07-17 19:05:33';
+
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id, pur.updated_at
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.updated_at &gt; '2020-07-17 19:05:32' and pur.updated_at &lt; '2020-07-17 19:05:44';
+
+
+-- thip khao chunk 11 time window
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:32' and updated_at &lt; '2020-07-17 19:05:43';
+
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.updated_at, pur.updated_at
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.updated_at &gt; '2020-07-17 19:05:32' and pur.updated_at &lt; '2020-07-17 19:05:43';
+
+-- thip khao chunk 12
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and created_at &gt; '2020-07-17 19:05:43' and updated_at &lt; '2020-07-17 19:05:51';
+
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id, pur.last_updated_by_import_datetime
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:43' and updated_at &lt; '2020-07-17 19:05:51';
+
+-- thip khao all
+select * from purchase where last_updated_by_import_id=110 and updated_at &gt; '2020-07-17 18:00:00' and updated_at &lt; '2020-07-17 19:15:00';
+select * from purchase where business_id=13856 and updated_at &gt; '2020-07-17 19:00:00' and updated_at &lt; '2020-07-17 21:00:00';
+
+
+
+</string>
+			<key>table</key>
+			<string>import</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>287.5</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- rachel.karitis@gmail.com (11), jedrosss@hotmail.com (2), jparlato@comcast.net (missing in prod and chunk 11 - which means it s not in chunk 11)
+
+-- paige.ashley.chan@gmail.com, barbiecedillo@hotmail.com (already in prod, included in chunk 11)
+
+
+
+-- thip khao missing from 11 and prod
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.`last_updated_by_import_id`
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856 and
+pat.email in ('jparlato@comcast.net', 'jedrosss@hotmail.com')</string>
+		<string>-- rachel.karitis@gmail.com (11), jedrosss@hotmail.com (2), jparlato@comcast.net (missing in prod and chunk 11 - which means it s not in chunk 11)
+
+-- paige.ashley.chan@gmail.com, barbiecedillo@hotmail.com (already in prod, included in chunk 11)
+
+
+
+-- thip khao chunk 2 emails
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.`last_updated_by_import_id`
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856 and
+pat.email in ('sarah.aheron@gmail.com', 'jedrosss@hotmail.com')</string>
+		<string>-- rachel.karitis@gmail.com (11), jedrosss@hotmail.com (2), jparlato@comcast.net (missing in prod and chunk 11 - which means it s not in chunk 1)
+
+-- paige.ashley.chan@gmail.com, barbiecedillo@hotmail.com (already in prod, included in chunk 11)
+
+
+
+-- thip khao chunk 2 emails
+select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.`last_updated_by_import_id`
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856 and
+pat.email in ('sarah.aheron@gmail.com')</string>
+		<string>select * from purchase where business_id=13856 and updated_at &gt; '2020-07-17 19:00:00' and updated_at &lt; '2020-07-17 21:00:00'</string>
+		<string>-- thip khao chunk 12
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and created_at &gt; '2020-07-17 19:05:43' and created_at &lt; '2020-07-17 19:05:51'</string>
+		<string>select * from purchase where business_id=13856 and created_at &gt; '2020-07-17 19:00:00' and created_at &lt; '2020-07-17 21:00:00'</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.updated_at, pur.updated_at
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.updated_at &gt; '2020-07-17 19:05:32' and pur.updated_at &lt; '2020-07-17 19:05:43'</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id, pur.updated_at
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.updated_at &gt; '2020-07-17 19:05:32' and pur.updated_at &lt; '2020-07-17 19:05:44'</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id, pur.last_updated_by_import_datetime
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.last_updated_by_import_datetime &gt; '2020-07-17 19:05:32' and pur.last_updated_by_import_datetime &lt; '2020-07-17 19:05:44'</string>
+		<string>-- thip khao chunk 10 time window
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:23' and updated_at &lt; '2020-07-17 19:05:33'</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id, pur.last_updated_by_import_datetime
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.last_updated_by_import_datetime &gt; '2020-07-17 19:05:32' and pur.last_updated_by_import_datetime &lt; '2020-07-17 19:05:43'</string>
+		<string>-- thip khao chunk 12
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:43' and updated_at &lt; '2020-07-17 19:05:51'</string>
+		<string>-- thip khao chunk 11 time window
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:32' and updated_at &lt; '2020-07-17 19:05:43'</string>
+		<string>-- thip khao chunk 11 time window
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and updated_at &gt; '2020-07-17 19:05:32' and updated_at &lt; '2020-07-17 20:05:43'</string>
+		<string>-- thip khao chunk 12
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and udpated_at &gt; '2020-07-17 19:05:43' and udpated_at &lt; '2020-07-17 20:05:51'</string>
+		<string>-- thip khao chunk 11 time window
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and last_updated_by_import_datetime &gt; '2020-07-17 19:05:32' and last_updated_by_import_datetime &lt; '2020-07-17 20:05:43'</string>
+		<string>-- thip khao chunk 12
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and last_updated_by_import_datetime &gt; '2020-07-17 19:05:43' and last_updated_by_import_datetime &lt; '2020-07-17 20:05:51'</string>
+		<string>-- thip khao chunk 12
+select * from purchase where business_id=13856 and inserted_by_import_id=110 and last_updated_by_import_datetime &gt; '2020-07-17 19:05:43' and last_updated_by_import_datetime &lt; '2020-07-17 14:05:51'</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856 and
+pat.email='jantracy@gmail.com'</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.last_updated_by_import_id, pur.last_updated_by_import_datetime
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id
+where 
+v.business_id=13856
+and pur.inserted_by_import_id=110 and pur.last_updated_by_import_datetime &gt; '2020-07-17 19:05:32' and pur.last_updated_by_import_datetime &lt; '2020-07-17 20:05:43'</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

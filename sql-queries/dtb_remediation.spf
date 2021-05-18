@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_prod</string>
+			<key>host</key>
+			<string>db-prod-secondary-0</string>
+			<key>kcid</key>
+			<string>-4628350568772129645</string>
+			<key>name</key>
+			<string>prod-readonly</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tock_readonly5</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYoWE5TT2JqZWN0AAgAEQAaACQAKQAy
+			ADcASQBMAFEAUwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgA
+			nQC9AMIAzwDRANMA2ADjAOwA9wD6AQUBDgETASABIwAAAAAAAAIB
+			AAAAAAAAACkAAAAAAAAAAAAAAAAAAAEs
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>select * from business where id=11120;
+select * from business where business_group_id=8200;
+
+-- guests that were created on second run OTGC w/ reservations on friday (DTB)  14439
+select * from guest_profile where guest_profile.business_group_id=8200 and guest_profile.created_at &gt; '2020-06-19 17:05:56' and guest_profile.created_at &lt; '2020-06-19 17:09:39';
+
+-- guests that were created w/ OTGC - guests only (DTB) 14,433
+select * from guest_profile where guest_profile.business_group_id=8200 and guest_profile.created_at &gt; '2020-06-19 16:46:24' and guest_profile.created_at &lt; '2020-06-19 17:05:56' and guest_profile.updated_at &lt; '2020-06-19 17:05:56';
+
+-- guests that were created w/ guests only that were updated after import (DTB) 1251
+select * from guest_profile where guest_profile.business_group_id=8200 and guest_profile.created_at &gt; '2020-06-19 16:46:24' and guest_profile.created_at &lt; '2020-06-19 17:05:56' and guest_profile.updated_at&gt;'2020-06-19 17:05:56';
+
+-- guests that were created w/ guests only that were NOT updated after import (DTB)
+select * from guest_profile where guest_profile.business_group_id=8200 and guest_profile.created_at &gt; '2020-06-19 16:46:24' and guest_profile.created_at &lt; '2020-06-19 17:05:56' and guest_profile.updated_at &lt; '2020-06-19 17:05:56';
+
+-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (DTB) 14431
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=8200 
+  and guest_profile.email is null
+  and guest_profile.created_at &gt; '2020-06-19 16:46:24' 
+  and guest_profile.created_at &lt; '2020-06-19 17:05:56' 
+  and guest_profile.updated_at &lt; '2020-06-19 17:05:56'
+  and purchase.id is null;
+
+-- 17,413 guests were incorrectly imported w/ no historical reservations
+-- 14,434 of those guests were not updated after the import
+-- 2,979 of those guests were updated after the import (over the weekend)
+-- 14,439 guests were re-imported w/ historical reseration information
+-- 14,431 guests that were created w/ no historical reservations were not updated again &amp; have no reservations associated with them - are safe to be archived
+
+
+-- 2,979 guests that were created w/ no historical reservations were updated over the weekend
+-- 2,756 were updated over the weekend w/ reservations. -- will not be archived &amp; have duplicate guests information (one w/ historical &amp; one with reservations from over the weekend)
+-- 223 were updated over the weekend w/o reservations -- will not be archived &amp; have duplicate guests information (one w/ profile information from improt &amp; one with profile changes from over the weekend)
+
+  
+update 
+  guest_profile g
+  left outer join purchase p
+  on g.patron_id = p.original_patron_id 
+set 
+  g.is_archived=1
+where g.business_group_id=8200 
+  and g.email is null
+  and g.created_at &gt; '2020-06-19 16:46:24' 
+  and g.created_at &lt; '2020-06-19 17:05:56' 
+  and g.updated_at &lt; '2020-06-19 17:05:56'
+  and p.id is null;	
+  
+  
+  
+-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (DTB) 14431
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+join patron on guest_profile.patron_id = patron.id
+where guest_profile.business_group_id=8200 
+  and patron.email is null
+  and guest_profile.created_at &gt; '2020-06-19 16:46:24' 
+  and guest_profile.created_at &lt; '2020-06-19 17:05:56' 
+  and guest_profile.updated_at &lt; '2020-06-19 17:05:56'
+  and purchase.id is null;
+ </string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>314</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (DTB) 14431
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=8200 
+  and guest_profile.email is null
+  and guest_profile.created_at &gt; '2020-06-19 16:46:24' 
+  and guest_profile.created_at &lt; '2020-06-19 17:05:56' 
+  and guest_profile.updated_at &lt; '2020-06-19 17:05:56'
+  and purchase.id is null</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (DTB) 14431
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=8200 
+  and guest_profile.created_at &gt; '2020-06-19 16:46:24' 
+  and guest_profile.created_at &lt; '2020-06-19 17:05:56' 
+  and guest_profile.updated_at &lt; '2020-06-19 17:05:56'
+  and purchase.id is null</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (DTB) 14431
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=8200 
+  and patron.email is null
+  and guest_profile.created_at &gt; '2020-06-19 16:46:24' 
+  and guest_profile.created_at &lt; '2020-06-19 17:05:56' 
+  and guest_profile.updated_at &lt; '2020-06-19 17:05:56'
+  and purchase.id is null</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit, email, created on friday during import &amp; was not updated over the weekend. (DTB) 14431
+select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+join patron on guest_profile.patron_id = patron.id
+where guest_profile.business_group_id=8200 
+  and patron.email is null
+  and guest_profile.created_at &gt; '2020-06-19 16:46:24' 
+  and guest_profile.created_at &lt; '2020-06-19 17:05:56' 
+  and guest_profile.updated_at &lt; '2020-06-19 17:05:56'
+  and purchase.id is null</string>
+		<string>update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=8200 
+	and g.email is null
+	and g.created_at &gt; '2020-06-19 16:46:24' 
+	and g.created_at &lt; '2020-06-19 17:05:56' 
+	and g.updated_at &lt; '2020-06-19 17:05:56'
+	and p.id is null</string>
+		<string>select * from guest_profile 
+left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-19 16:30:02' 
+	and guest_profile.created_at &lt; '2020-06-19 16:41:36' 
+	and guest_profile.updated_at &lt; '2020-06-19 16:41:36' 
+	and purchase.id is null</string>
+		<string>update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=10874 
+	and g.email is null
+	and g.created_at &gt; '2020-06-19 16:30:02' 
+	and g.created_at &lt; '2020-06-19 16:41:36' 
+	and g.updated_at &lt; '2020-06-19 16:41:36' 
+	and p.id is null</string>
+		<string>update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=1
+where g.business_group_id=1 
+	and g.email is null
+	and g.created_at &gt; '2020-06-17 22:07:16' 
+	and g.created_at &lt; '2020-06-17 22:17:58' 
+	and g.updated_at&lt;'2020-06-17 22:17:58' 
+	and p.id is null</string>
+		<string>(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=1 and guest_profile.email is null
+and guest_profile.created_at &gt; '2020-06-17 22:07:16' and guest_profile.created_at &lt; '2020-06-17 22:17:58' and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+and purchase.id is null)</string>
+		<string>update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=0
+where g.business_group_id=1 
+	and g.email is null
+	and g.created_at &gt; '2020-06-17 22:07:16' 
+	and g.created_at &lt; '2020-06-17 22:17:58' 
+	and g.updated_at&lt;'2020-06-17 22:17:58' 
+	and p.id is null</string>
+		<string>update 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=0
+where g.business_group_id=1 
+	and g.email is null
+	and g.created_at &gt; '2020-06-17 22:07:16' 
+	and g.created_at &lt; '2020-06-17 22:17:58' 
+	and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+	and purchase.id is null</string>
+		<string>update 
+	guest_profile 
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+set 
+	g.is_archived=0
+where g.business_group_id=1 
+	and g.email is null
+	and g.created_at &gt; '2020-06-17 22:07:16' 
+	and g.created_at &lt; '2020-06-17 22:17:58' 
+	and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+	and purchase.id is null</string>
+		<string>from 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_</string>
+		<string>update 
+	guest_profile 
+set 
+	guest_profile.is_archived=0
+from 
+	guest_profile g
+	left outer join purchase p
+	on g.patron_id = p.original_patron_id 
+where guest_profile.business_group_id=1 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-17 22:07:16' 
+	and guest_profile.created_at &lt; '2020-06-17 22:17:58' 
+	and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+	and purchase.id is null</string>
+		<string>update 
+	guest_profile 
+set 
+	guest_profile.is_archived=0
+from 
+	guest_profile g
+	left join purchase p
+	on g.patron_id = p.original_patron_id 
+where guest_profile.business_group_id=1 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-17 22:07:16' 
+	and guest_profile.created_at &lt; '2020-06-17 22:17:58' 
+	and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+	and purchase.id is null</string>
+		<string>update 
+	guest_profile 
+set 
+	guest_profile.is_archived=0
+from 
+	guest_profile 
+	left outer join purchase 
+	on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=1 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-17 22:07:16' 
+	and guest_profile.created_at &lt; '2020-06-17 22:17:58' 
+	and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+	and purchase.id is null</string>
+		<string>update 
+	guest_profile 
+set 
+	guest_profile.is_archived=0
+from 
+	guest_profile 
+	left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=1 
+	and guest_profile.email is null
+	and guest_profile.created_at &gt; '2020-06-17 22:07:16' 
+	and guest_profile.created_at &lt; '2020-06-17 22:17:58' 
+	and guest_profile.updated_at&lt;'2020-06-17 22:17:58' 
+	and purchase.id is null</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it and has an email (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is not null
+and guest_profile.updated_at&lt;'2020-06-19 16:42:36')</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it and has an email (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is not null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36')</string>
+		<string>-- guests that were created w/ guests only  that don't have a visit associated with it and has an email (Sabio) 10397
+(select * from guest_profile left outer join purchase on guest_profile.patron_id = purchase.original_patron_id 
+where guest_profile.business_group_id=10874 and guest_profile.email is not null
+and guest_profile.created_at &gt; '2020-06-19 16:30:02' and guest_profile.created_at &lt; '2020-06-19 16:41:36' and guest_profile.updated_at&lt;'2020-06-19 16:42:36' 
+and purchase.id is null)</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.13-MariaDB-1:10.4.13+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

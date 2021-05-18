@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>tock_estelle</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-759467013896072806</string>
+			<key>name</key>
+			<string>local</string>
+			<key>port</key>
+			<integer>3306</integer>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>tocktix</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYoWE5TT2JqZWN0AAgAEQAaACQAKQAy
+			ADcASQBMAFEAUwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgA
+			nQC9AMIAzwDRANMA2ADjAOwA9wD6AQUBDgETASABIwAAAAAAAAIB
+			AAAAAAAAACkAAAAAAAAAAAAAAAAAAAEs
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {694, 448}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>SELECT business.id AS "Business ID",
+        patron.email AS "User Email",
+        CASE role_business.role
+            WHEN 0 THEN 'Admin'
+            WHEN 1 THEN 'Employee/Host'
+            WHEN 2 THEN 'Employee/Host'
+            WHEN 3 THEN 'Account Owner'
+            ELSE 'N/A'
+        END AS "User Role",
+        business.business_type_string AS "Business Type",
+        IF(business_details.inventory_mode = 0, 'Slot', 'Flex') as "Reservation Type",
+        IF(business.tock_product_type = 0, 'Classic', 'Events') as "Product Type",
+        IF(business_details.scheduled_inventory_config IS TRUE,'TACO','Non-TACO') AS "TACO",
+        CASE business.tock_product_level
+           WHEN 0 THEN 'Intro'
+           WHEN 1 THEN 'Plus'
+           WHEN 2 THEN 'Pro'
+           WHEN 3 THEN 'Essential'
+           WHEN 4 THEN 'Premium'
+           ELSE 'N/A'
+        END AS "Billing Plan",
+        IF(business_feature.business_id = business.id AND business_feature.feature_id = 1662, 'True', 'False') AS "ToGo Enabled"
+FROM role_business
+JOIN patron ON patron.id= role_business.patron_id
+JOIN business ON business.id = role_business.business_id
+JOIN business_details ON business.business_details_id = business_details.id
+JOIN business_feature ON business_feature.business_id = business.id
+WHERE patron.email NOT LIKE '%tockhq.com'
+  AND business.created_at &gt;= {{ beginning_date (yyyymmdd) }}
+  AND business.created_at &lt;= {{ end_date (yyyymmdd) }}
+  AND business.is_authorized_by_tock = 1
+  AND business.bookings_disabled = 0
+ORDER BY role_business.business_id DESC;</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>268</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select * from patron</string>
+		<string>select * from business where id=4276</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, 
+patron.id as patron_id, patron.first_name, patron.last_name, patron.email, patron.phone, n.note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone, n.note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id
+left outer join patron_note n on n.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone, n.note from visit
+left outer join patron_note n on n.patron_id=patron.id
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone, n.note from visit
+left outer join patron_note n on n.patron_id=p.id
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone, patron.note from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id
+left outer join guest_profile_tag gt on gt.patron_id=patron.id</string>
+		<string>select * from patron p
+left outer join patron_note n on n.patron_id=p.id</string>
+		<string>select * from guest_profile</string>
+		<string>select * from patron p
+left outer join guest_profile_tag g on g.patron_id=p.id</string>
+		<string>select * from visit</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join guest_profile_tag
+left outer join patron on visit.patron_id=patron.id</string>
+		<string>select visit.service_date, purchase.start_time, purchase.ticket_count as party_size, visit.table_name, visit_tag.id as visit_tag_id, visit_tag.tag, patron.first_name, patron.last_name, patron.email, patron.phone from visit
+left outer join purchase on visit.purchase_id=purchase.id
+left outer join visit_tag on visit.id=visit_tag.visit_id
+left outer join patron on visit.patron_id=patron.id</string>
+		<string>select v.business_id, v.id, v.purchase_id,  v.table_name, v.is_cancelled, pur.date, pur.start_time, pat.id as patron_id, pat.email, pat.first_name, pat.last_name, pat.phone, pur.inserted_by_import_id, pur.updated_at, pur.updated_at
+from visit v
+left outer join purchase pur on pur.id=v.purchase_id
+left outer join patron pat on pat.id=pur.original_patron_id</string>
+		<string>select * from purchase</string>
+		<string>select * from patron where first_name='Abu'</string>
+		<string>select * from patron where email='luzchavez84@gmail.com'</string>
+		<string>select * from business where id=992</string>
+		<string>-- 15542581
+
+select * from patron_import where patron_id=15542581</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.5.5-10.4.12-MariaDB-1:10.4.12+maria~bionic-log</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
